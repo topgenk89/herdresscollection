@@ -139,18 +139,36 @@
         ? `<s>${rupiah(p.was)}</s><span class="now">${rupiah(p.price)}</span> <small>/${MIN_RENTAL_DAYS} hari</small>${extraNote}`
         : `${rupiah(p.price)} <small>/${MIN_RENTAL_DAYS} hari</small>${extraNote}`;
       document.getElementById("pDesc").textContent = "Gaun elegan siap sewa untuk momen spesialmu — cocok untuk pesta, resepsi, atau acara formal. Dirawat rapi dan siap membuatmu tampil memukau.";
-      document.getElementById("mainImg").src = imgs[0];
+      document.getElementById("mainImg").src = p.img;
       document.getElementById("mainImg").alt = p.name;
 
-      // thumbs
-      document.getElementById("thumbs").innerHTML = imgs.map((src,i) =>
-        `<button class="${i===0?'active':''}" data-i="${i}"><img src="${src}" alt=""></button>`).join("");
-      document.getElementById("thumbs").addEventListener("click", e => {
-        const b = e.target.closest("button"); if (!b) return;
-        document.querySelectorAll("#thumbs button").forEach(x => x.classList.remove("active"));
-        b.classList.add("active");
-        document.getElementById("mainImg").src = imgs[+b.dataset.i];
-      });
+      // Galeri / Thumbs
+      // Susun kumpulan foto: Foto Utama + Foto-foto Galeri
+      let allImgs = [p.img];
+      if (p.img_gallery && p.img_gallery.length > 0) {
+        allImgs = allImgs.concat(p.img_gallery);
+      }
+
+      const thumbsContainer = document.getElementById("thumbs");
+      if (allImgs.length > 1) {
+        // Tampilkan kotak-kotak kecil jika ada lebih dari 1 foto
+        thumbsContainer.innerHTML = allImgs.map((src, i) =>
+          `<button class="${i === 0 ? 'active' : ''}" data-i="${i}"><img src="${src}" alt=""></button>`
+        ).join("");
+        thumbsContainer.style.display = "grid"; // Atur sesuai CSS gallery__thumbs
+
+        thumbsContainer.addEventListener("click", e => {
+          const b = e.target.closest("button");
+          if (!b) return;
+          document.querySelectorAll("#thumbs button").forEach(x => x.classList.remove("active"));
+          b.classList.add("active");
+          document.getElementById("mainImg").src = allImgs[+b.dataset.i];
+        });
+      } else {
+        // Sembunyikan container kotak kecil kalau fotonya cuma 1
+        thumbsContainer.innerHTML = "";
+        thumbsContainer.style.display = "none";
+      }
 
       // sizes
       const sizesArray = p.sizes || ["S","M","L"];

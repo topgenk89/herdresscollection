@@ -127,11 +127,28 @@
                   <span style="font-size: 10px; color: #888;">Pisahkan dengan koma</span>
                 </label>
               </div>
-              <label>Foto dress <span id="imgReqText">*</span>
+              <label>Foto Utama Dress <span id="imgReqText">*</span>
                 <input type="file" name="image" id="imageInput" accept="image/*" />
-                <span id="imgEditHelp" style="font-size: 10px; color: #888;" hidden>Biarkan kosong jika tidak ingin ganti foto</span>
+                <span id="imgEditHelp" style="font-size: 10px; color: #888;" hidden>Biarkan kosong jika tidak ingin ganti foto utama</span>
               </label>
               <div class="admin-preview" id="preview" hidden><img id="previewImg" alt="Preview" /></div>
+
+              <!-- Foto Galeri Tambahan -->
+              <div class="admin-card" style="background: var(--oat); padding: 15px; margin-bottom: 20px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px;">Galeri Detail (Opsional)</h4>
+                <p style="font-size: 11px; color: #666; margin-bottom: 12px;">Tambahkan foto sisi lain, corak, atau detail bahan (maksimal 3 foto). Jika kosong, halaman produk hanya menampilkan Foto Utama.</p>
+                <div class="admin-form__row" style="grid-template-columns: 1fr 1fr 1fr;">
+                  <label style="font-size: 11px;">Detail 1
+                    <input type="file" name="gallery1" accept="image/*" style="font-size: 11px;" />
+                  </label>
+                  <label style="font-size: 11px;">Detail 2
+                    <input type="file" name="gallery2" accept="image/*" style="font-size: 11px;" />
+                  </label>
+                  <label style="font-size: 11px;">Detail 3
+                    <input type="file" name="gallery3" accept="image/*" style="font-size: 11px;" />
+                  </label>
+                </div>
+              </div>
 
               <div class="admin-form__actions">
                 <button type="submit" class="btn btn--solid btn--full" id="submitBtn">Simpan Produk</button>

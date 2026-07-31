@@ -188,6 +188,7 @@ function normalizeProduct(p) {
     status: p.status || "tersedia",
     sizes: Array.isArray(p.sizes) ? p.sizes : (typeof p.sizes === "string" ? p.sizes.split(",").map(s=>s.trim()) : ["S","M","L"]),
     img: p.img || "https://placehold.co/700x900/E7DED2/2B2622?text=Dress",
+    img_gallery: Array.isArray(p.img_gallery) ? p.img_gallery : [],
     alt: p.alt || p.img || "https://placehold.co/700x900/E7DED2/2B2622?text=Dress",
     demoData: p.demoData
   };

@@ -323,6 +323,9 @@ form.addEventListener("submit", async (e) => {
   const sizes = sizesRaw ? sizesRaw.split(",").map(s => s.trim()).filter(Boolean) : ["S","M"];
   const tags = fd.getAll("tags"); // Ambil array checkbox
   const file = fd.get("image");
+  const g1 = fd.get("gallery1");
+  const g2 = fd.get("gallery2");
+  const g3 = fd.get("gallery3");
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Menyimpan...";
@@ -334,18 +337,35 @@ form.addEventListener("submit", async (e) => {
       return;
     }
 
-    let imgUrl = null;
-    // Upload gambar BARU jika ada
-    if (file && file.size > 0) {
-      const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-      const path = `dress-${Date.now()}.${ext}`;
-      const up = await supabaseClient.storage.from(STORAGE_BUCKET).upload(path, file, { upsert: false });
+    // Helper untuk upload gambar
+    const uploadToSupabase = async (f, prefix) => {
+      if (!f || f.size === 0) return null;
+      const ext = (f.name.split(".").pop() || "jpg").toLowerCase();
+      const path = `${prefix}-${Date.now()}.${ext}`;
+      const up = await supabaseClient.storage.from(STORAGE_BUCKET).upload(path, f, { upsert: false });
       if (up.error) throw up.error;
-      imgUrl = supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path).data.publicUrl;
-    }
+      return supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path).data.publicUrl;
+    };
+
+    // Upload foto utama BARU jika ada
+    let imgUrl = await uploadToSupabase(file, 'dress');
+
+    // Siapkan array foto galeri
+    let newGallery = [];
+    if (g1 && g1.size > 0) newGallery.push(await uploadToSupabase(g1, 'gal1'));
+    if (g2 && g2.size > 0) newGallery.push(await uploadToSupabase(g2, 'gal2'));
+    if (g3 && g3.size > 0) newGallery.push(await uploadToSupabase(g3, 'gal3'));
 
     const payload = { name, price, extra_day, was, cat, collection, status, badge, sizes, tags };
     if (imgUrl) { payload.img = imgUrl; payload.alt = imgUrl; }
+
+    // Gabungkan array galeri lama dengan yang baru (khusus saat edit, jika ada tambahan)
+    // Untuk penyederhanaan, foto galeri baru di form akan menambah / mengganti slot (tergantung implementasi)
+    // Di sini kita timpa jika ada upload baru, jika tidak biarkan kosong / tidak diupdate.
+    if (newGallery.length > 0) {
+      // Jika edit dan mau append: ini butuh ambil state lama. Kita overwrite saja sesuai form.
+      payload.img_gallery = newGallery;
+    }
 
     if (editId) {
       // UPDATE
