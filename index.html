@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Herdress Collection — Rental Gaun Pesta & Kebaya Premium</title>
+  <meta name="description" content="Temukan koleksi rental gaun pesta, kebaya modern, bridesmaid, dan gaun pengantin premium di Herdress Collection. Tampil memukau tanpa harus membeli." />
+  <link rel="canonical" href="https://herdresscollection.com/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Announcement -->
+  <div class="topbar">Rental dress mulai Rp50.000 / 4 hari · Pesan langsung via WhatsApp</div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="wrap header__inner">
+      <nav class="nav"></nav>
+      <button class="burger icon-btn" id="burger" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a href="index.html" class="brand">HERDRESS</a>
+      <div class="header__actions">
+        <button class="icon-btn" id="cartOpen" aria-label="Keranjang Rental">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile nav -->
+  <nav class="mobile-nav" id="mobileNav"></nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img class="hero__img" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1800&q=80" alt="Model mengenakan gaun sewaan TERRA Rental" />
+    <div class="wrap hero__content">
+      <span class="eyebrow">Koleksi Rental Terbaru</span>
+      <h1>Tampil memukau,<br /><em>tanpa harus membeli.</em></h1>
+      <a href="shop.html" class="btn btn--solid" style="background:var(--cream);color:var(--ink)">Lihat Koleksi Rental</a>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="strip" aria-hidden="true">
+    <div class="strip__track">
+      <span>Gaun Pesta · Kebaya Modern · Dress Pengantin · Bridesmaid · Pesan via WhatsApp · </span>
+      <span>Gaun Pesta · Kebaya Modern · Dress Pengantin · Bridesmaid · Pesan via WhatsApp · </span>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <section class="section wrap">
+    <div class="section__head">
+      <div>
+        <span class="eyebrow">Telusuri</span>
+        <h2>Rental per kategori</h2>
+      </div>
+      <a href="shop.html">Lihat semua</a>
+    </div>
+    <div class="cats">
+      <a href="shop.html" class="cat">
+        <img src="https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=800&q=80" alt="Gaun Pesta" />
+        <span class="cat__label"><b>Gaun Pesta</b><span>Rental harian</span></span>
+      </a>
+      <a href="shop.html" class="cat">
+        <img src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?auto=format&fit=crop&w=700&q=80" alt="Kebaya" />
+        <span class="cat__label"><b>Kebaya</b><span>Rental harian</span></span>
+      </a>
+      <a href="shop.html" class="cat">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=700&q=80" alt="Bridesmaid" />
+        <span class="cat__label"><b>Bridesmaid</b><span>Rental harian</span></span>
+      </a>
+      <a href="shop.html" class="cat">
+        <img src="https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=1000&q=80" alt="Gaun Pengantin" />
+        <span class="cat__label"><b>Gaun Pengantin</b><span>Rental harian</span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Featured products -->
+  <section class="section wrap" style="padding-top:0">
+    <div class="section__head">
+      <div>
+        <span class="eyebrow">Baru tersedia</span>
+        <h2>Pilihan minggu ini</h2>
+      </div>
+      <a href="shop.html">Semua koleksi</a>
+    </div>
+    <div class="grid" id="featuredGrid"><!-- injected by JS --></div>
+  </section>
+
+  <!-- Editorial split -->
+  <section class="split">
+    <div class="split__img">
+      <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1000&q=80" alt="Gaun rental Herdress Collection" />
+    </div>
+    <div class="split__body">
+      <span class="eyebrow">Kenapa merental?</span>
+      <h2>Satu acara, satu tampilan sempurna.</h2>
+      <p>Tak perlu keluar biaya besar untuk gaun yang hanya dipakai sekali. Rental dress berkualitas dengan harga terjangkau — kami rawat, kami cuci, kamu tinggal tampil percaya diri.</p>
+      <a href="shop.html" class="btn btn--line" style="align-self:flex-start">Mulai merental</a>
+    </div>
+  </section>
+
+  <!-- Best sellers -->
+  <section class="section wrap">
+    <div class="section__head">
+      <div>
+        <span class="eyebrow">Favorit</span>
+        <h2>Paling sering dirental</h2>
+      </div>
+      <a href="shop.html">Lihat semua</a>
+    </div>
+    <div class="grid" id="bestGrid"></div>
+  </section>
+
+  <!-- Values -->
+  <section class="section wrap" style="padding-top:0">
+    <div class="values">
+      <div class="value">
+        <h4>Hemat & praktis</h4>
+        <p>Rental mulai Rp50.000 / 4 hari — tampil mewah tanpa membeli gaun mahal yang hanya dipakai sekali.</p>
+      </div>
+      <div class="value">
+        <h4>Bersih & terawat</h4>
+        <p>Setiap dress dicuci profesional dan disetrika rapi sebelum sampai ke tanganmu. Siap pakai.</p>
+      </div>
+      <div class="value">
+        <h4>Koleksi Premium</h4>
+        <p>Berbagai ukuran dan warna dari desainer lokal. Kami pastikan kualitas kain dan jahitan tetap prima.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cara Kerja -->
+  <section class="section" style="background: var(--oat);">
+    <div class="wrap">
+      <div class="section__head" style="justify-content: center; text-align: center; margin-bottom: 60px;">
+        <div>
+          <span class="eyebrow">Langkah Mudah</span>
+          <h2>Cara Merental Dress</h2>
+        </div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h4>Pilih Dress</h4>
+          <p>Telusuri koleksi kami, temukan gaun impianmu, dan cek ketersediaan ukuran.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h4>Pesan via WA</h4>
+          <p>Masukkan tanggal rental lalu kirim pesanan. Tim kami akan mengonfirmasi jadwal & deposit.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h4>Tampil Memukau</h4>
+          <p>Dress dikirim ke alamatmu 1 hari sebelum acara. Nikmati momen spesialmu dengan percaya diri.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <h4>Kembalikan</h4>
+          <p>Kembalikan H+1 setelah acara. Tak perlu dicuci, kami yang akan mengurus pembersihannya.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section wrap">
+    <div class="section__head">
+      <div>
+        <span class="eyebrow">Ulasan Pelanggan</span>
+        <h2>Apa Kata Mereka</h2>
+      </div>
+    </div>
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Sangat puas! Dressnya wangi, rapi banget pas datang, dan ukurannya pas. Gak perlu ribet nyuci lagi pas kembaliin. Bakal langganan untuk kondangan berikutnya!"</p>
+        <div class="reviewer">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80" alt="Almira" class="avatar" />
+          <div class="rev-info">
+            <b>Almira N.</b>
+            <small>Merental Gaun Malam Emerald</small>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Awalnya ragu rental online, tapi pas adminnya ngejelasin detail via WA jadi tenang. Dressnya persis kayak di foto, kualitas premium. Sangat menyelamatkan dompet."</p>
+        <div class="reviewer">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" alt="Sarah" class="avatar" />
+          <div class="rev-info">
+            <b>Sarah D.</b>
+            <small>Merental Dress Bridesmaid</small>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Kebayanya cantik banget! Proses rentalnya cepat, admin ramah dan depositnya juga langsung dikembalikan hari itu juga setelah dress sampai. Recommended banget Herdress."</p>
+        <div class="reviewer">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&q=80" alt="Nadia" class="avatar" />
+          <div class="rev-info">
+            <b>Nadia Fitri</b>
+            <small>Merental Kebaya Modern</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section news">
+    <div class="wrap">
+      <h2>Punya pertanyaan seputar rental?</h2>
+      <p>Hubungi kami langsung via WhatsApp untuk cek ketersediaan & jadwal fitting.</p>
+      <a href="https://wa.me/6281234567890" target="_blank" class="btn btn--solid" style="background:var(--clay);color:#fff;margin-top:8px" id="waHelp">Chat via WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="brand">HERDRESS</div>
+          <p>Rental dress & gaun untuk setiap momen spesialmu. Dari Bandung, untuk seluruh Indonesia.</p>
+        </div>
+        <div>
+          <h5>Kategori</h5>
+          <ul><li><a href="shop.html">Gaun Pesta</a></li><li><a href="shop.html">Kebaya</a></li><li><a href="shop.html">Bridesmaid</a></li><li><a href="shop.html">Pengantin</a></li></ul>
+        </div>
+        <div>
+          <h5>Bantuan</h5>
+          <ul><li><a href="#">Panduan Ukuran</a></li><li><a href="#">Cara Rental</a></li><li><a href="#">Syarat & Deposit</a></li><li><a href="https://wa.me/6281234567890" target="_blank">Kontak WA</a></li></ul>
+        </div>
+        <div>
+          <h5>Perusahaan</h5>
+          <ul><li><a href="#">Tentang</a></li><li><a href="#">Testimoni</a></li><li><a href="#">Karier</a></li></ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Herdress Collection. Dibuat dengan penuh perhatian.</span>
+        <span>Instagram · TikTok · WhatsApp</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="cartDrawer" aria-label="Keranjang rental">
+    <div class="drawer__head">
+      <h3>Keranjang Rental</h3>
+      <button class="icon-btn" id="cartClose" aria-label="Tutup">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="drawer__body" id="cartBody"></div>
+    <div class="drawer__foot" id="cartFoot" hidden>
+      <div class="checkout-form">
+        <label>Nama pemesan
+          <input type="text" id="coName" placeholder="Nama lengkap" />
+        </label>
+        <label>No. WhatsApp Anda
+          <input type="tel" id="coPhone" placeholder="0812xxxx (untuk konfirmasi)" />
+        </label>
+        <div class="checkout-form__row">
+          <label>Tanggal mulai rental
+            <input type="date" id="coStart" />
+          </label>
+          <label>Durasi (hari) · min. 4
+            <input type="number" id="coDays" value="4" min="4" />
+          </label>
+        </div>
+      </div>
+      <div class="drawer__total"><span>Estimasi <span id="cartDaysLbl">4</span> hari</span><span id="cartTotal">Rp0</span></div>
+      <small>Berlaku kelipatan 4 hari. Deposit dikonfirmasi via WhatsApp.</small>
+      <button class="btn btn--solid btn--full" id="checkoutBtn">Pesan via WhatsApp</button>
+    </div>
+  </aside>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pusat Kendali Admin — Herdress Collection</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="admin-body">
+  <div class="topbar">Pusat Kendali Admin · Herdress Collection</div>
+
+  <!-- Layar Login -->
+  <div id="loginScreen" class="admin-login-screen">
+    <div class="admin-login-card">
+      <h3>Login Admin</h3>
+      <form id="loginForm">
+        <label>Email Admin
+          <input type="email" id="loginUser" required placeholder="email@contoh.com" />
+        </label>
+        <label>Password
+          <input type="password" id="loginPass" required />
+        </label>
+        <button type="submit" class="btn btn--solid btn--full" style="margin-top: 8px;" id="loginBtn">Masuk</button>
+      </form>
+      <div id="loginError" class="login-error" hidden>Email atau password salah.</div>
+    </div>
+  </div>
+
+  <!-- Konten Admin (Disembunyikan sebelum login) -->
+  <div id="adminContent" hidden>
+    <div class="admin-header">
+      <div class="wrap admin-header__inner">
+        <div>
+          <h1>HERDRESS Admin</h1>
+          <p>Sistem Manajemen Rental Dress</p>
+        </div>
+        <div class="admin-header__actions">
+          <a href="index.html" class="btn btn--line" target="_blank" style="padding: 10px 16px; font-size: 11px;">Lihat Toko</a>
+          <button id="logoutBtn" class="btn btn--solid" style="padding: 10px 16px; font-size: 11px;">Keluar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div id="statusBanner" class="admin-banner" hidden></div>
+      <div id="modeNote" class="admin-note" style="margin-top: 20px;"></div>
+
+      <!-- Tab Navigasi -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="tab-produk">👗 Kelola Produk</button>
+        <button class="admin-tab" data-tab="tab-taxo">🏷️ Kategori & Koleksi</button>
+        <button class="admin-tab" data-tab="tab-menu">🧭 Menu Navigasi</button>
+        <button class="admin-tab" data-tab="tab-order">📒 Catatan Rental</button>
+        <button class="admin-tab" data-tab="tab-setting">⚙️ Pengaturan Web</button>
+      </div>
+
+      <!-- TAB 1: KELOLA PRODUK -->
+      <div id="tab-produk" class="admin-tab-content active">
+        <div class="admin-layout">
+          <!-- Form Tambah/Edit Produk -->
+          <div class="admin-card">
+            <h3 id="formTitle">Tambah Dress Baru</h3>
+            <form id="productForm" class="admin-form">
+              <input type="hidden" name="editId" id="editId" />
+              <label>Nama dress *
+                <input type="text" name="name" id="pName" required placeholder="mis. Gaun Malam Satin Emerald" />
+              </label>
+              <div class="admin-form__row">
+                <label>Kategori *
+                  <select name="cat" id="pCat" required>
+                    <!-- diisi dinamis -->
+                  </select>
+                </label>
+                <label>Status Dress *
+                  <select name="status" id="pStatus" required>
+                    <option value="tersedia">Tersedia (Ready)</option>
+                    <option value="disewa">Sedang Disewa</option>
+                    <option value="laundry">Di-Laundry</option>
+                  </select>
+                </label>
+              </div>
+
+              <label>Koleksi Tematik (opsional)
+                <select name="collection" id="pCollection">
+                  <option value="">— Tanpa koleksi —</option>
+                  <!-- diisi dinamis -->
+                </select>
+              </label>
+
+              <label>Tag Khusus (opsional)
+                <div class="admin-checks" id="pTags">
+                  <label class="admin-check"><input type="checkbox" name="tags" value="hijab" /> Hijab Friendly</label>
+                  <label class="admin-check"><input type="checkbox" name="tags" value="pregnant" /> Pregnant Friendly</label>
+                </div>
+              </label>
+
+              <div class="admin-form__row">
+                <label>Harga paket 4 hari (Rp) *
+                  <input type="text" inputmode="numeric" name="price" id="pPrice" required placeholder="50.000" />
+                  <span style="font-size: 10px; color: #888;">Harga dasar untuk sewa minimal 4 hari</span>
+                </label>
+                <label>Biaya perpanjangan dadakan / hari (Rp)
+                  <input type="text" inputmode="numeric" name="extra_day" id="pExtraDay" placeholder="15.000" />
+                  <span style="font-size: 10px; color: #888;">Hanya sebagai info biaya perpanjangan di tengah jalan (bukan untuk checkout)</span>
+                </label>
+              </div>
+              <div class="admin-form__row">
+                <label>Harga coret (opsional)
+                  <input type="text" inputmode="numeric" name="was" id="pWas" placeholder="kosongkan bila tidak" />
+                </label>
+                <label>&nbsp;</label>
+              </div>
+              <div class="admin-form__row">
+                <label>Label Promo
+                  <select name="badge" id="pBadge">
+                    <option value="">Tanpa label</option>
+                    <option value="Baru">Baru</option>
+                    <option value="Promo">Promo</option>
+                  </select>
+                </label>
+                <label>Stok Ukuran Tersedia
+                  <input type="text" name="sizes" id="pSizes" placeholder="S, M, L" value="S, M, L, XL" />
+                  <span style="font-size: 10px; color: #888;">Pisahkan dengan koma</span>
+                </label>
+              </div>
+              <label>Foto dress <span id="imgReqText">*</span>
+                <input type="file" name="image" id="imageInput" accept="image/*" />
+                <span id="imgEditHelp" style="font-size: 10px; color: #888;" hidden>Biarkan kosong jika tidak ingin ganti foto</span>
+              </label>
+              <div class="admin-preview" id="preview" hidden><img id="previewImg" alt="Preview" /></div>
+
+              <div class="admin-form__actions">
+                <button type="submit" class="btn btn--solid btn--full" id="submitBtn">Simpan Produk</button>
+                <button type="button" class="btn btn--line btn--full" id="cancelEditBtn" hidden>Batal Edit</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Daftar Produk -->
+          <div class="admin-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+              <h3 style="margin:0;">Katalog <span id="prodCount" class="admin-count"></span></h3>
+            </div>
+
+            <div class="admin-tools">
+              <input type="text" id="searchProduct" class="admin-search" placeholder="Cari nama dress..." />
+              <select id="filterCat" class="admin-filter">
+                <option value="all">Semua Kategori</option>
+                <!-- diisi dinamis -->
+              </select>
+            </div>
+
+            <div id="adminList" class="admin-list"></div>
+          </div>
+        </div>
+      </div> <!-- /TAB 1 -->
+
+      <!-- TAB: KATEGORI & KOLEKSI -->
+      <div id="tab-taxo" class="admin-tab-content" hidden>
+        <div class="admin-layout">
+          <!-- KATEGORI -->
+          <div class="admin-card">
+            <h3>Kategori Produk</h3>
+            <p style="font-size:13px; color:var(--ink-soft); margin-bottom:16px;">Muncul sebagai menu navigasi & filter di halaman toko.</p>
+            <form id="catForm" class="admin-form" style="margin-bottom:20px;">
+              <div class="admin-form__row" style="grid-template-columns: 1fr 120px; align-items:end;">
+                <label>Nama Kategori * <input type="text" name="name" required placeholder="mis. Gaun Anak" /></label>
+                <button type="submit" class="btn btn--solid btn--full" style="padding:11px;">+ Tambah</button>
+              </div>
+            </form>
+            <div id="catList" class="admin-list"></div>
+          </div>
+
+          <!-- KOLEKSI -->
+          <div class="admin-card">
+            <h3>Koleksi Tematik</h3>
+            <p style="font-size:13px; color:var(--ink-soft); margin-bottom:16px;">Kumpulan tematik (mis. Koleksi Lebaran) yang muncul di menu "Collection".</p>
+            <form id="collForm" class="admin-form" style="margin-bottom:20px;">
+              <label>Nama Koleksi * <input type="text" name="name" required placeholder="mis. Koleksi Lebaran" /></label>
+              <label>Deskripsi Singkat <input type="text" name="description" placeholder="mis. Busana muslim untuk Idul Fitri" /></label>
+              <button type="submit" class="btn btn--solid btn--full" style="padding:11px;">+ Tambah Koleksi</button>
+            </form>
+            <div id="collList" class="admin-list"></div>
+          </div>
+        </div>
+      </div> <!-- /TAB KATEGORI -->
+
+      <!-- TAB: MENU BUILDER -->
+      <div id="tab-menu" class="admin-tab-content" hidden>
+        <div class="admin-layout">
+          <!-- Buat Menu Baru -->
+          <div class="admin-card">
+            <h3>Tambah Menu</h3>
+            <form id="menuForm" class="admin-form">
+              <label>Nama Label Menu * <input type="text" id="mLabel" required placeholder="mis. By Color" /></label>
+              <div class="admin-form__row">
+                <label>Tipe Link *
+                  <select id="mType" required>
+                    <option value="cat">Kategori</option>
+                    <option value="collection">Koleksi Tematik</option>
+                    <option value="tag">Tag Khusus</option>
+                    <option value="price">Rentang Harga</option>
+                    <option value="link">URL Bebas</option>
+                    <option value="group">Dropdown Group</option>
+                  </select>
+                </label>
+                <label>Target / Tujuan *
+                  <select id="mTargetCat"><option value="">-- Pilih --</option></select>
+                  <select id="mTargetColl" hidden><option value="">-- Pilih --</option></select>
+                  <select id="mTargetTag" hidden>
+                    <option value="hijab">Hijab Friendly</option>
+                    <option value="pregnant">Pregnant Friendly</option>
+                  </select>
+                  <select id="mTargetPrice" hidden>
+                    <option value="0-100000">Di bawah Rp100k</option>
+                    <option value="100000-200000">Rp100k - Rp200k</option>
+                    <option value="200000-400000">Rp200k - Rp400k</option>
+                    <option value="400000-">Di atas Rp400k</option>
+                  </select>
+                  <input type="text" id="mTargetLink" hidden placeholder="mis. /halaman.html" />
+                  <input type="text" id="mTargetGroup" hidden disabled value="(akan diisi sub-menu)" />
+                </label>
+              </div>
+              <label id="mParentWrap">Masukkan ke dalam (Induk)
+                <select id="mParent"><option value="">— Menu Utama (Paling Luar) —</option></select>
+              </label>
+              <button type="submit" class="btn btn--solid btn--full" style="padding:11px;">+ Tambah ke Menu</button>
+            </form>
+          </div>
+
+          <!-- Susunan Menu -->
+          <div class="admin-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+              <h3 style="margin:0;">Struktur Navigasi</h3>
+              <button class="btn btn--line" id="saveMenuBtn" style="padding:6px 12px; font-size:11px;">Simpan Perubahan</button>
+            </div>
+            <p style="font-size:13px; color:var(--ink-soft); margin-bottom:16px;">Seret (drag) untuk mengurutkan menu. Tekan Hapus untuk membuang.</p>
+            <div id="menuBuilder" class="menu-list"></div>
+          </div>
+        </div>
+      </div> <!-- /TAB MENU -->
+
+      <!-- TAB 2: CATATAN RENTAL -->
+      <div id="tab-order" class="admin-tab-content" hidden>
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <h3>Buat Catatan Rental Baru</h3>
+          <form id="orderForm" class="admin-form">
+            <div class="admin-form__row" style="grid-template-columns: 1.5fr 1fr 1.5fr 1fr 1fr 150px; align-items: end;">
+              <label>Pelanggan * <input type="text" name="customer" required placeholder="Nama pemesan" /></label>
+              <label>No. WhatsApp <input type="text" name="customer_phone" placeholder="0812xxxx" /></label>
+              <label>Dress * <input type="text" name="dress_name" required placeholder="Nama Dress & Ukuran" /></label>
+              <label>Tgl Pinjam * <input type="date" name="rent_start" required /></label>
+              <label>Tgl Kembali * <input type="date" name="rent_end" required /></label>
+              <button type="submit" class="btn btn--solid btn--full" id="saveOrderBtn" style="padding: 11px;">+ Tambah</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="admin-card">
+          <h3>Buku Catatan Rental</h3>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Pelanggan</th>
+                  <th>No. WA</th>
+                  <th>Dress yang Dirental</th>
+                  <th>Tgl Pinjam</th>
+                  <th>Tgl Kembali</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="orderList">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> <!-- /TAB 2 -->
+
+      <!-- TAB 3: PENGATURAN -->
+      <div id="tab-setting" class="admin-tab-content" hidden>
+        <div class="admin-layout">
+          <div class="admin-card">
+            <h3>Pengaturan Website</h3>
+            <form id="settingsForm" class="admin-form">
+              <label>Teks Promo Banner Atas (Topbar)
+                <input type="text" id="setTopbar" placeholder="Promo rental..." />
+              </label>
+              <label>Nomor WhatsApp Tujuan (Format: 628xxxx)
+                <input type="text" id="setWa" placeholder="6281234567890" />
+                <span style="font-size: 11px; color:#888;">Semua tombol pesan WhatsApp di web akan memakai nomor ini.</span>
+              </label>
+              <button type="submit" class="btn btn--solid" id="saveSettingsBtn" style="margin-top: 10px;">Simpan Pengaturan</button>
+            </form>
+          </div>
+
+          <div class="admin-card" style="background: var(--cream); border-style: dashed;">
+            <h3>Bantuan</h3>
+            <ul style="font-size: 13px; color: var(--ink-soft); padding-left: 20px; line-height: 1.8;">
+              <li>Perubahan di tab ini langsung diterapkan ke halaman toko pengunjung.</li>
+              <li>Pastikan nomor WA diawali <strong>62</strong> (tanpa spasi/tanda hubung).</li>
+              <li>Jika Supabase belum diset, pengaturan hanya tersimpan di memori browser Anda (Mode Demo).</li>
+            </ul>
+          </div>
+        </div>
+      </div> <!-- /TAB 3 -->
+
+    </div>
+  </div> <!-- End adminContent -->
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__bottom" style="border:none;padding-top:0">
+        <span>© 2026 Herdress Collection — Panel Admin</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

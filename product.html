@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Rental — Herdress Collection</title>
+  <meta name="description" content="Sewa gaun impianmu hari ini. Detail gaun pesta dan kebaya premium dari Herdress Collection." />
+  <link rel="canonical" href="https://herdresscollection.com/product.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="topbar">Rental dress mulai Rp50.000 / 4 hari · Pesan langsung via WhatsApp</div>
+
+  <header class="header">
+    <div class="wrap header__inner">
+      <nav class="nav"><a href="shop.html">Gaun Pesta</a><a href="shop.html">Kebaya</a><a href="shop.html">Bridesmaid</a><a href="shop.html">Pengantin</a></nav>
+      <button class="burger icon-btn" id="burger" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <a href="index.html" class="brand">HERDRESS</a>
+      <div class="header__actions">
+        <button class="icon-btn" id="cartOpen" aria-label="Keranjang Rental"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg><span class="count" id="cartCount">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" id="mobileNav"><a href="shop.html">Gaun Pesta</a><a href="shop.html">Kebaya</a><a href="shop.html">Bridesmaid</a><a href="shop.html">Pengantin</a><a href="admin.html">Kelola Produk</a></nav>
+
+  <div class="wrap">
+    <div class="crumbs" style="padding-top:28px"><a href="index.html">Beranda</a> / <a href="shop.html">Koleksi Sewa</a> / <span id="crumbName"></span></div>
+
+    <div class="pdp">
+      <!-- Gallery -->
+      <div class="gallery">
+        <div class="gallery__main"><img id="mainImg" src="" alt="" /></div>
+        <div class="gallery__thumbs" id="thumbs"></div>
+      </div>
+
+      <!-- Info -->
+      <div class="pdp__info">
+        <span class="pdp__brand" id="pBrand"></span>
+        <h1 id="pName"></h1>
+        <div class="pdp__price" id="pPrice"></div>
+        <div class="stars">★★★★★ <span id="pReviews">128 penyewa puas</span></div>
+        <p class="pdp__desc" id="pDesc"></p>
+
+        <div class="opt-label">Ukuran <a href="#">Panduan ukuran</a></div>
+        <div class="sizes" id="sizes"></div>
+
+        <div class="pdp__cta">
+          <button class="btn btn--solid" id="addBtn">Tambah ke Keranjang Rental</button>
+          <button class="btn btn--line" aria-label="Simpan" style="flex:0 0 auto;padding:15px 18px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11Z"/></svg>
+          </button>
+        </div>
+
+        <div class="accordion">
+          <details open><summary>Detail &amp; bahan</summary><p>Dress dirawat & dicuci profesional sebelum direntalkan. Bahan nyaman, jahitan rapi, dan potongan yang membentuk siluet indah untuk berbagai acara.</p></details>
+          <details><summary>Ketentuan rental</summary><p>Harga adalah untuk penyewaan paket 4 hari (kelipatan). Jika memperpanjang masa sewa di tengah waktu rental, akan dikenakan biaya perpanjangan dadakan per hari sesuai yang tertera. Wajib deposit yang dikembalikan setelah dress dikembalikan dalam kondisi baik.</p></details>
+          <details><summary>Pengambilan &amp; pengembalian</summary><p>Ambil di butik kami atau kirim via kurir (ongkir ditanggung penyewa). Dress dikembalikan maksimal H+1 setelah masa rental berakhir.</p></details>
+          <details><summary>Perawatan selama rental</summary><p>Jangan mencuci sendiri. Hindari noda berat & sobek. Kerusakan di luar wajar dikenakan biaya perbaikan sesuai kesepakatan.</p></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- You may also like -->
+    <section class="section" style="padding-top:20px">
+      <div class="section__head"><div><span class="eyebrow">Lengkapi acaramu</span><h2>Kamu mungkin suka</h2></div></div>
+      <div class="grid" id="relatedGrid"></div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand"><div class="brand">HERDRESS</div><p>Rental dress & gaun untuk setiap momen spesialmu. Dari Bandung, untuk seluruh Indonesia.</p></div>
+        <div><h5>Kategori</h5><ul><li><a href="shop.html">Gaun Pesta</a></li><li><a href="shop.html">Kebaya</a></li><li><a href="shop.html">Bridesmaid</a></li><li><a href="shop.html">Pengantin</a></li></ul></div>
+        <div><h5>Bantuan</h5><ul><li><a href="#">Panduan Ukuran</a></li><li><a href="#">Cara Rental</a></li><li><a href="#">Syarat & Deposit</a></li><li><a href="https://wa.me/6281234567890" target="_blank">Kontak WA</a></li></ul></div>
+        <div><h5>Perusahaan</h5><ul><li><a href="#">Tentang</a></li><li><a href="#">Testimoni</a></li><li><a href="#">Karier</a></li></ul></div>
+      </div>
+      <div class="footer__bottom"><span>© 2026 Herdress Collection. Dibuat dengan penuh perhatian.</span><span>Instagram · TikTok · WhatsApp</span></div>
+    </div>
+  </footer>
+
+  <!-- Sticky add bar -->
+  <div class="sticky-bar" id="stickyBar">
+    <div class="sticky-bar__inner">
+      <div class="sticky-bar__meta"><b id="sbName"></b><small id="sbPrice"></small></div>
+      <button class="btn btn--solid" id="sbAdd" style="min-width:200px">Tambah ke Keranjang Rental</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="cartDrawer" aria-label="Keranjang rental">
+    <div class="drawer__head"><h3>Keranjang Rental</h3><button class="icon-btn" id="cartClose" aria-label="Tutup"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <div class="drawer__body" id="cartBody"></div>
+    <div class="drawer__foot" id="cartFoot" hidden>
+      <div class="checkout-form">
+        <label>Nama pemesan
+          <input type="text" id="coName" placeholder="Nama lengkap" />
+        </label>
+        <label>No. WhatsApp Anda
+          <input type="tel" id="coPhone" placeholder="0812xxxx (untuk konfirmasi)" />
+        </label>
+        <div class="checkout-form__row">
+          <label>Tanggal mulai rental
+            <input type="date" id="coStart" />
+          </label>
+          <label>Durasi (hari) · min. 4
+            <input type="number" id="coDays" value="4" min="4" />
+          </label>
+        </div>
+      </div>
+      <div class="drawer__total"><span>Estimasi <span id="cartDaysLbl">4</span> hari</span><span id="cartTotal">Rp0</span></div>
+      <small>Berlaku kelipatan 4 hari. Deposit dikonfirmasi via WhatsApp.</small>
+      <button class="btn btn--solid btn--full" id="checkoutBtn">Pesan via WhatsApp</button>
+    </div>
+  </aside>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    window.__initProduct = function () {
+      const id = +(new URLSearchParams(location.search).get("id")) || (PRODUCTS[0] && PRODUCTS[0].id) || 1;
+      const p = PRODUCTS.find(x => x.id === id) || PRODUCTS[0];
+      if (!p) return;
+      let size = null;
+      const imgs = [p.img, p.alt, p.img, p.alt];
+      const isAvailable = p.status === "tersedia";
+
+      document.getElementById("crumbName").textContent = p.name;
+      document.getElementById("pBrand").textContent = p.brand;
+      document.getElementById("pName").textContent = p.name;
+      document.title = p.name + " — Herdress Collection";
+      const extraNote = p.extra_day ? `<br><small style="font-size: 11px; color: #777; font-weight: normal;">(Biaya denda/perpanjangan dadakan: ${rupiah(p.extra_day)}/hari)</small>` : "";
+      document.getElementById("pPrice").innerHTML = p.was
+        ? `<s>${rupiah(p.was)}</s><span class="now">${rupiah(p.price)}</span> <small>/${MIN_RENTAL_DAYS} hari</small>${extraNote}`
+        : `${rupiah(p.price)} <small>/${MIN_RENTAL_DAYS} hari</small>${extraNote}`;
+      document.getElementById("pDesc").textContent = "Gaun elegan siap sewa untuk momen spesialmu — cocok untuk pesta, resepsi, atau acara formal. Dirawat rapi dan siap membuatmu tampil memukau.";
+      document.getElementById("mainImg").src = imgs[0];
+      document.getElementById("mainImg").alt = p.name;
+
+      // thumbs
+      document.getElementById("thumbs").innerHTML = imgs.map((src,i) =>
+        `<button class="${i===0?'active':''}" data-i="${i}"><img src="${src}" alt=""></button>`).join("");
+      document.getElementById("thumbs").addEventListener("click", e => {
+        const b = e.target.closest("button"); if (!b) return;
+        document.querySelectorAll("#thumbs button").forEach(x => x.classList.remove("active"));
+        b.classList.add("active");
+        document.getElementById("mainImg").src = imgs[+b.dataset.i];
+      });
+
+      // sizes
+      const sizesArray = p.sizes || ["S","M","L"];
+      document.getElementById("sizes").innerHTML = sizesArray.map(s =>
+        `<button class="size-btn" data-s="${s}">${s}</button>`).join("");
+      document.getElementById("sizes").addEventListener("click", e => {
+        const b = e.target.closest(".size-btn"); if (!b) return;
+        document.querySelectorAll(".size-btn").forEach(x => x.classList.remove("active"));
+        b.classList.add("active"); size = b.dataset.s;
+      });
+
+      const addBtn = document.getElementById("addBtn");
+      const sbAdd = document.getElementById("sbAdd");
+      if (!isAvailable) {
+        addBtn.disabled = true;
+        addBtn.textContent = p.status === 'disewa' ? 'Sedang Disewa' : 'Di-Laundry';
+        addBtn.style.background = '#e3e6ea'; addBtn.style.color = '#4a5568';
+        sbAdd.disabled = true;
+        sbAdd.textContent = p.status === 'disewa' ? 'Sedang Disewa' : 'Di-Laundry';
+        sbAdd.style.background = '#e3e6ea'; sbAdd.style.color = '#4a5568';
+      } else {
+        function add() {
+          if (!size) { alert("Silakan pilih ukuran terlebih dahulu."); return; }
+          Cart.add(p.id, size);
+        }
+        addBtn.addEventListener("click", add);
+        sbAdd.addEventListener("click", add);
+      }
+
+      // sticky bar
+      document.getElementById("sbName").textContent = p.name;
+      document.getElementById("sbPrice").textContent = rupiah(p.price) + ` /${MIN_RENTAL_DAYS} hari`;
+      const cta = document.querySelector(".pdp__cta");
+      const sb = document.getElementById("stickyBar");
+      addEventListener("scroll", () => {
+        const past = cta.getBoundingClientRect().bottom < 0;
+        sb.classList.toggle("show", past);
+      });
+
+      // related
+      renderGrid(document.getElementById("relatedGrid"), PRODUCTS.filter(x => x.id !== p.id).slice(0, 4));
+    };
+  </script>
+</body>
+</html>

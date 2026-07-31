@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koleksi Tematik — Herdress Collection</title>
+  <meta name="description" content="Jelajahi koleksi tematik gaun pesta dan kebaya dari Herdress Collection." />
+  <link rel="canonical" href="https://herdresscollection.com/collections.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="topbar">Rental dress mulai Rp175.000/hari · Pesan langsung via WhatsApp</div>
+
+  <header class="header">
+    <div class="wrap header__inner">
+      <nav class="nav"></nav>
+      <button class="burger icon-btn" id="burger" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a href="index.html" class="brand">HERDRESS</a>
+      <div class="header__actions">
+        <button class="icon-btn" id="cartOpen" aria-label="Keranjang Rental"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg><span class="count" id="cartCount">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" id="mobileNav"></nav>
+
+  <div class="wrap page-head">
+    <div class="crumbs"><a href="index.html">Beranda</a> / Koleksi Tematik</div>
+    <h1>Koleksi Tematik</h1>
+    <p>Pilihan busana yang kami kurasi khusus untuk momen-momen istimewa.</p>
+  </div>
+
+  <section class="section wrap" style="padding-top:40px">
+    <div class="cats" id="collectionsGrid" style="grid-template-columns:repeat(3,1fr)"></div>
+    <p id="collEmpty" class="admin-empty" hidden>Belum ada koleksi tematik.</p>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand"><div class="brand">HERDRESS</div><p>Rental dress & gaun untuk setiap momen spesialmu. Dari Bandung, untuk seluruh Indonesia.</p></div>
+        <div><h5>Kategori</h5><ul><li><a href="shop.html">Semua Koleksi</a></li></ul></div>
+        <div><h5>Bantuan</h5><ul><li><a href="#">Cara Rental</a></li><li><a href="https://wa.me/6281234567890" target="_blank">Kontak WA</a></li></ul></div>
+        <div><h5>Perusahaan</h5><ul><li><a href="#">Tentang</a></li></ul></div>
+      </div>
+      <div class="footer__bottom"><span>© 2026 Herdress Collection. Dibuat dengan penuh perhatian.</span><span>Instagram · TikTok · WhatsApp</span></div>
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="cartDrawer" aria-label="Keranjang rental">
+    <div class="drawer__head"><h3>Keranjang Rental</h3><button class="icon-btn" id="cartClose" aria-label="Tutup"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <div class="drawer__body" id="cartBody"></div>
+    <div class="drawer__foot" id="cartFoot" hidden>
+      <div class="checkout-form">
+        <label>Nama pemesan <input type="text" id="coName" placeholder="Nama lengkap" /></label>
+        <label>No. WhatsApp Anda <input type="tel" id="coPhone" placeholder="0812xxxx (untuk konfirmasi)" /></label>
+        <div class="checkout-form__row">
+          <label>Tanggal mulai rental <input type="date" id="coStart" /></label>
+          <label>Durasi (hari) <input type="number" id="coDays" value="1" min="1" /></label>
+        </div>
+      </div>
+      <div class="drawer__total"><span>Subtotal / hari</span><span id="cartTotal">Rp0</span></div>
+      <small>Estimasi total &amp; deposit dikonfirmasi via WhatsApp.</small>
+      <button class="btn btn--solid btn--full" id="checkoutBtn">Pesan via WhatsApp</button>
+    </div>
+  </aside>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    window.__initCollections = function () {
+      const grid = document.getElementById("collectionsGrid");
+      const empty = document.getElementById("collEmpty");
+      if (!COLLECTIONS || !COLLECTIONS.length) {
+        grid.style.display = "none";
+        empty.hidden = false;
+        return;
+      }
+      grid.innerHTML = COLLECTIONS.map(c => {
+        // ambil gambar dari salah satu produk di koleksi ini bila coll.img kosong
+        const prod = PRODUCTS.find(p => p.collection === c.slug);
+        const img = c.img || (prod ? prod.img : "https://placehold.co/700x900/E7DED2/2B2622?text=Koleksi");
+        return `
+          <a href="shop.html?collection=${c.slug}" class="cat">
+            <img src="${img}" alt="${c.name}" />
+            <span class="cat__label"><b>${c.name}</b><span>${c.description || "Lihat koleksi"}</span></span>
+          </a>`;
+      }).join("");
+    };
+  </script>
+</body>
+</html>
