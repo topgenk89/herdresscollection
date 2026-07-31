@@ -49,7 +49,7 @@
         <div class="sizes" id="sizes"></div>
 
         <div class="pdp__cta">
-          <button class="btn btn--solid" id="addBtn">Tambah ke Keranjang Rental</button>
+          <button class="btn btn--solid" id="addBtn">Pesan via WhatsApp</button>
           <button class="btn btn--line" aria-label="Simpan" style="flex:0 0 auto;padding:15px 18px">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11Z"/></svg>
           </button>
@@ -87,7 +87,7 @@
   <div class="sticky-bar" id="stickyBar">
     <div class="sticky-bar__inner">
       <div class="sticky-bar__meta"><b id="sbName"></b><small id="sbPrice"></small></div>
-      <button class="btn btn--solid" id="sbAdd" style="min-width:200px">Tambah ke Keranjang Rental</button>
+      <button class="btn btn--solid" id="sbAdd" style="min-width:200px">Pesan via WhatsApp</button>
     </div>
   </div>
 
@@ -172,12 +172,19 @@
         sbAdd.textContent = p.status === 'disewa' ? 'Sedang Disewa' : 'Di-Laundry';
         sbAdd.style.background = '#e3e6ea'; sbAdd.style.color = '#4a5568';
       } else {
-        function add() {
+        function orderDirect() {
           if (!size) { alert("Silakan pilih ukuran terlebih dahulu."); return; }
+          // Langsung buka keranjang dan masukkan dress ini
+          // (kalau belum ada, dimasukkan. Kalau sudah ada, qty bertambah)
           Cart.add(p.id, size);
+          // Auto fokus ke nama untuk mempercepat checkout
+          setTimeout(() => {
+            const coName = document.getElementById("coName");
+            if (coName) coName.focus();
+          }, 300);
         }
-        addBtn.addEventListener("click", add);
-        sbAdd.addEventListener("click", add);
+        addBtn.addEventListener("click", orderDirect);
+        sbAdd.addEventListener("click", orderDirect);
       }
 
       // sticky bar
