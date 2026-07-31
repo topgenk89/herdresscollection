@@ -633,6 +633,7 @@ function renderTaxoLists() {
   if (catList) {
     catList.innerHTML = CATEGORIES.length ? CATEGORIES.map(c => `
       <div class="admin-item">
+        ${c.img ? `<img src="${c.img}" alt="${c.name}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;" />` : `<div style="width:50px; height:50px; background:#eee; border-radius:4px;"></div>`}
         <div class="admin-item__info">
           <b>${c.name}</b>
           <small>slug: ${c.slug}</small>
@@ -667,18 +668,36 @@ function saveDemoTaxo() {
 /* Tambah Kategori */
 document.getElementById("catForm")?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const name = (new FormData(e.target).get("name") || "").trim();
-  if (!name) return;
+  const btn = e.target.querySelector("button[type=submit]");
+  btn.disabled = true; btn.textContent = "Loading...";
+
+  const fd = new FormData(e.target);
+  const name = (fd.get("name") || "").trim();
+  const file = fd.get("image");
+  if (!name) { btn.disabled = false; btn.textContent = "+ Tambah"; return; }
+
   const slug = toSlug(name);
-  if (CATEGORIES.some(c => c.slug === slug)) { showBanner("Kategori sudah ada.", "error"); return; }
+  if (CATEGORIES.some(c => c.slug === slug)) { showBanner("Kategori sudah ada.", "error"); btn.disabled = false; btn.textContent = "+ Tambah"; return; }
 
   try {
+    let imgUrl = null;
     if (supabaseClient) {
+      if (file && file.size > 0) {
+        const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+        const path = `cat-${slug}-${Date.now()}.${ext}`;
+        const up = await supabaseClient.storage.from(STORAGE_BUCKET).upload(path, file, { upsert: false });
+        if (up.error) throw up.error;
+        imgUrl = supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path).data.publicUrl;
+      }
+
       const ord = CATEGORIES.length + 1;
-      const { error } = await supabaseClient.from("categories").insert([{ slug, name, ord }]);
+      const payload = { slug, name, ord };
+      if (imgUrl) payload.img = imgUrl;
+
+      const { error } = await supabaseClient.from("categories").insert([payload]);
       if (error) throw error;
     } else {
-      CATEGORIES.push({ slug, name, ord: CATEGORIES.length + 1 });
+      CATEGORIES.push({ slug, name, ord: CATEGORIES.length + 1, img: null });
       saveDemoTaxo();
     }
     await loadTaxonomy();
@@ -686,7 +705,11 @@ document.getElementById("catForm")?.addEventListener("submit", async (e) => {
     renderTaxoLists();
     e.target.reset();
     showBanner("✓ Kategori ditambahkan.", "success");
-  } catch (err) { showBanner("Gagal: " + err.message, "error"); }
+  } catch (err) {
+    showBanner("Gagal: " + err.message, "error");
+  } finally {
+    btn.disabled = false; btn.textContent = "+ Tambah";
+  }
 });
 
 /* Tambah Koleksi */

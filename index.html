@@ -63,23 +63,8 @@
       </div>
       <a href="shop.html">Lihat semua</a>
     </div>
-    <div class="cats">
-      <a href="shop.html" class="cat">
-        <img src="https://placehold.co/800x1200?text=Kategori+1" alt="Gaun Pesta" />
-        <span class="cat__label"><b>Gaun Pesta</b><span>Rental harian</span></span>
-      </a>
-      <a href="shop.html" class="cat">
-        <img src="https://placehold.co/800x1200?text=Kategori+2" alt="Kebaya" />
-        <span class="cat__label"><b>Kebaya</b><span>Rental harian</span></span>
-      </a>
-      <a href="shop.html" class="cat">
-        <img src="https://placehold.co/800x1200?text=Kategori+3" alt="Bridesmaid" />
-        <span class="cat__label"><b>Bridesmaid</b><span>Rental harian</span></span>
-      </a>
-      <a href="shop.html" class="cat">
-        <img src="https://placehold.co/800x1200?text=Kategori+4" alt="Gaun Pengantin" />
-        <span class="cat__label"><b>Gaun Pengantin</b><span>Rental harian</span></span>
-      </a>
+    <div class="cats" id="catsGrid">
+      <!-- Diisi dinamis oleh JS dari database Kategori -->
     </div>
   </section>
 
@@ -290,5 +275,22 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js"></script>
   <script src="js/app.js"></script>
+  <script>
+    window.__initIndex = function() {
+      // Tampilkan Kategori dinamis
+      const catsGrid = document.getElementById("catsGrid");
+      if (catsGrid && typeof CATEGORIES !== "undefined") {
+        catsGrid.innerHTML = CATEGORIES.map(c => {
+          const imgSrc = c.img || `https://placehold.co/800x1200?text=${encodeURIComponent(c.name)}`;
+          return `
+            <a href="shop.html?cat=${c.slug}" class="cat">
+              <img src="${imgSrc}" alt="${c.name}" />
+              <span class="cat__label"><b>${c.name}</b><span>Rental ${MIN_RENTAL_DAYS} hari</span></span>
+            </a>
+          `;
+        }).join("");
+      }
+    };
+  </script>
 </body>
 </html>

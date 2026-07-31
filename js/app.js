@@ -35,7 +35,8 @@ const DEFAULT_CATEGORIES = [
 const rupiah = n => "Rp" + Number(n || 0).toLocaleString("id-ID");
 
 /* Minimal hari sewa (harga dasar produk = paket untuk durasi ini) */
-const MIN_RENTAL_DAYS = 4;
+window.MIN_RENTAL_DAYS = 4;
+const MIN_RENTAL_DAYS = window.MIN_RENTAL_DAYS;
 
 /* Hitung total sewa berbasis blok/paket (per 4 hari).
    Misal: 1-4 hari = 1x harga paket; 5-8 hari = 2x harga paket. */
@@ -470,6 +471,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderGrid(document.getElementById("bestGrid"), PRODUCTS.slice(4, 8));
 
   // Page-specific hooks
+  window.__initIndex?.();
   window.__initShop?.();
   window.__initProduct?.();
   window.__initCollections?.();
