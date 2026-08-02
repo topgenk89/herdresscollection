@@ -653,12 +653,14 @@ function renderTaxoLists() {
   if (catList) {
     catList.innerHTML = CATEGORIES.length ? CATEGORIES.map(c => `
       <div class="admin-item">
-        ${c.img ? `<img src="${c.img}" alt="${c.name}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;" />` : `<div style="width:50px; height:50px; background:#eee; border-radius:4px;"></div>`}
+        ${c.img ? `<img src="${c.img}" alt="${c.name}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;" />` : `<div style="width:50px; height:50px; background:#eee; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:9px; color:#aaa;">No foto</div>`}
         <div class="admin-item__info">
           <b>${c.name}</b>
           <small>slug: ${c.slug}</small>
         </div>
         <div class="admin-item__actions">
+          <button class="admin-edit" data-photocat="${c.slug}">${c.img ? 'Ganti Foto' : 'Upload Foto'}</button>
+          <input type="file" accept="image/*" data-photoinput="${c.slug}" hidden />
           <button class="admin-del" data-delcat="${c.slug}">Hapus</button>
         </div>
       </div>`).join("") : `<p class="admin-empty">Belum ada kategori.</p>`;
@@ -771,6 +773,47 @@ document.getElementById("collForm")?.addEventListener("submit", async (e) => {
     e.target.reset();
     showBanner("✓ Koleksi ditambahkan.", "success");
   } catch (err) { showBanner("Gagal: " + err.message, "error"); }
+});
+
+/* Ganti / Upload Foto Kategori (klik tombol -> buka file picker) */
+document.getElementById("tab-taxo")?.addEventListener("click", (e) => {
+  const photoBtn = e.target.closest("[data-photocat]");
+  if (photoBtn) {
+    const slug = photoBtn.dataset.photocat;
+    const input = document.querySelector(`[data-photoinput="${slug}"]`);
+    if (input) input.click();
+  }
+});
+
+/* Saat file dipilih -> upload & update kolom img kategori */
+document.getElementById("tab-taxo")?.addEventListener("change", async (e) => {
+  const input = e.target.closest("[data-photoinput]");
+  if (!input) return;
+  const slug = input.dataset.photoinput;
+  const file = input.files[0];
+  if (!file) return;
+
+  const btn = document.querySelector(`[data-photocat="${slug}"]`);
+  if (btn) { btn.disabled = true; btn.textContent = "Mengunggah..."; }
+
+  try {
+    if (!supabaseClient) { showBanner("Hubungkan Supabase dulu untuk upload foto.", "error"); return; }
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    const path = `cat-${slug}-${Date.now()}.${ext}`;
+    const up = await supabaseClient.storage.from(STORAGE_BUCKET).upload(path, file, { upsert: false });
+    if (up.error) throw up.error;
+    const imgUrl = supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path).data.publicUrl;
+
+    const { error } = await supabaseClient.from("categories").update({ img: imgUrl }).eq("slug", slug);
+    if (error) throw error;
+
+    await loadTaxonomy();
+    renderTaxoLists();
+    showBanner("✓ Foto kategori diperbarui.", "success");
+  } catch (err) {
+    showBanner("Gagal upload foto: " + err.message, "error");
+    if (btn) { btn.disabled = false; btn.textContent = "Ganti Foto"; }
+  }
 });
 
 /* Hapus Kategori / Koleksi (event delegation) */
