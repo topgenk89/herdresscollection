@@ -146,7 +146,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Label grup di mobile nav */
 .mobile-nav__label {
   font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--ink-soft); margin-top: 18px; padding: 6px 0;
+  color: var(--ink-soft); margin-top: 14px; padding: 6px 0;
 }
 
 .brand {
@@ -597,11 +597,30 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: var(--cream);
   transform: translateX(-100%);
   transition: transform .4s var(--ease);
-  padding: 90px var(--gut) 40px;
-  display: flex; flex-direction: column; gap: 6px;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
 }
 .mobile-nav.open { transform: translateX(0); }
-.mobile-nav a { font-family: var(--serif); font-size: 30px; font-weight: 300; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.mobile-nav__head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px var(--gut);
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; background: var(--cream); z-index: 2;
+}
+.mobile-nav__brand {
+  font-family: var(--serif); font-size: 22px; letter-spacing: .06em; color: var(--ink);
+}
+.mobile-nav__close {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; color: var(--ink);
+  background: none; border: none; cursor: pointer;
+}
+.mobile-nav__close:hover { color: var(--clay); }
+.mobile-nav__links {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 20px var(--gut) 40px;
+}
+.mobile-nav a { font-family: var(--serif); font-size: 22px; font-weight: 300; padding: 12px 0; border-bottom: 1px solid var(--line); }
 
 /* ============================================================
    Harga /hari kecil

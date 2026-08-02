@@ -130,7 +130,15 @@ function renderNav() {
 
   // Mobile: flat, group jadi label + sub-item
   document.querySelectorAll(".mobile-nav").forEach(mnav => {
-    let html = MENU.map(item => {
+    let html = `
+      <div class="mobile-nav__head">
+        <span class="mobile-nav__brand">HERDRESS</span>
+        <button class="mobile-nav__close" aria-label="Tutup menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="mobile-nav__links">`;
+    html += MENU.map(item => {
       if (item.type === "group" && item.children && item.children.length) {
         return `<span class="mobile-nav__label">${item.label}</span>` +
           item.children.map(ch => `<a href="${menuHref(ch)}">${ch.label}</a>`).join("");
@@ -138,8 +146,10 @@ function renderNav() {
       return `<a href="${menuHref(item)}">${item.label}</a>`;
     }).join("");
     html += `<a href="admin.html">Kelola Produk</a>`;
+    html += `</div>`;
     mnav.innerHTML = html;
     mnav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mnav.classList.remove("open")));
+    mnav.querySelector(".mobile-nav__close")?.addEventListener("click", () => mnav.classList.remove("open"));
   });
 }
 
