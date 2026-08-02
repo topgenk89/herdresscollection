@@ -639,7 +639,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .mobile-dd.open .mobile-dd__panel { max-height: 60vh; overflow-y: auto; }
 .mobile-dd__panel a {
-  font-size: 16px; padding: 10px 0 10px 16px; color: var(--ink-soft);
+  display: block; width: 100%;
+  font-size: 19px; padding: 15px 0; color: var(--ink);
   border-bottom: 1px solid var(--line);
 }
 .mobile-dd__panel a:last-child { border-bottom: none; }
