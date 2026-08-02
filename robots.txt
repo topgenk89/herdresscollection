@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /collections.html
+
+Sitemap: https://herdresscollection.com/sitemap.xml
