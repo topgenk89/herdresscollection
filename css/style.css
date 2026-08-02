@@ -16,7 +16,7 @@
   --line:        #EAD5DC;
 
   /* — Type — */
-  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   /* — Rhythm — */
@@ -154,9 +154,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .brand {
   font-family: var(--serif);
-  font-size: 26px;
-  font-weight: 400;
-  letter-spacing: .06em;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: .02em;
   text-align: center;
 }
 .header__actions { display: flex; gap: 20px; justify-content: flex-end; align-items: center; }
