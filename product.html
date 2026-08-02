@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detail Rental — Herdress Collection</title>
-  <meta name="description" content="Sewa gaun impianmu hari ini. Detail gaun pesta dan kebaya premium dari Herdress Collection." />
+  <meta name="description" content="Rental gaun impianmu hari ini. Detail gaun pesta dan kebaya premium dari Herdress Collection." />
   <link rel="canonical" href="https://herdresscollection.com/product.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,7 +28,7 @@
   <nav class="mobile-nav" id="mobileNav"></nav>
 
   <div class="wrap">
-    <div class="crumbs" style="padding-top:28px"><a href="/">Beranda</a> / <a href="shop.html">Koleksi Sewa</a> / <span id="crumbName"></span></div>
+    <div class="crumbs" style="padding-top:28px"><a href="/">Beranda</a> / <a href="shop.html">Koleksi Rental</a> / <span id="crumbName"></span></div>
 
     <div class="pdp">
       <!-- Gallery -->
@@ -57,7 +57,7 @@
 
         <div class="accordion">
           <details open><summary>Detail &amp; bahan</summary><p>Dress dirawat & dicuci profesional sebelum direntalkan. Bahan nyaman, jahitan rapi, dan potongan yang membentuk siluet indah untuk berbagai acara.</p></details>
-          <details><summary>Ketentuan rental</summary><p>Harga adalah untuk penyewaan paket 4 hari (kelipatan). Jika memperpanjang masa sewa di tengah waktu rental, akan dikenakan biaya perpanjangan dadakan per hari sesuai yang tertera. Wajib deposit yang dikembalikan setelah dress dikembalikan dalam kondisi baik.</p></details>
+          <details><summary>Ketentuan rental</summary><p>Harga adalah untuk paket rental 4 hari (kelipatan). Jika memperpanjang masa rental, akan dikenakan biaya Extra Day per hari sesuai yang tertera. Wajib deposit yang dikembalikan setelah dress dikembalikan dalam kondisi baik.</p></details>
           <details><summary>Pengambilan &amp; pengembalian</summary><p>Ambil di butik kami atau kirim via kurir (ongkir ditanggung penyewa). Dress dikembalikan maksimal H+1 setelah masa rental berakhir.</p></details>
           <details><summary>Perawatan selama rental</summary><p>Jangan mencuci sendiri. Hindari noda berat & sobek. Kerusakan di luar wajar dikenakan biaya perbaikan sesuai kesepakatan.</p></details>
         </div>
@@ -74,8 +74,7 @@
   <footer class="footer">
     <div class="wrap">
       <div class="footer__grid">
-        <div class="footer__brand"><div class="brand">HERDRESS</div><p>Rental dress & gaun untuk setiap momen spesialmu. Dari Bandung, untuk seluruh Indonesia.</p></div>
-        <div><h5>Kategori</h5><ul><li><a href="shop.html">Gaun Pesta</a></li><li><a href="shop.html">Kebaya</a></li><li><a href="shop.html">Bridesmaid</a></li><li><a href="shop.html">Pengantin</a></li></ul></div>
+        <div class="footer__brand"><div class="brand">HERDRESS</div><p>Rental dress & gaun untuk setiap momen spesialmu. Dari Tangerang, untuk seluruh Indonesia.</p></div>
         <div><h5>Bantuan</h5><ul><li><a href="#">Panduan Ukuran</a></li><li><a href="#">Cara Rental</a></li><li><a href="#">Syarat & Deposit</a></li><li><a href="https://wa.me/6281234567890" target="_blank">Kontak WA</a></li></ul></div>
         <div><h5>Perusahaan</h5><ul><li><a href="#">Tentang</a></li><li><a href="#">Testimoni</a></li><li><a href="#">Karier</a></li></ul></div>
       </div>
@@ -134,11 +133,11 @@
       document.getElementById("pBrand").textContent = p.brand;
       document.getElementById("pName").textContent = p.name;
       document.title = p.name + " — Herdress Collection";
-      const extraNote = p.extra_day ? `<br><small style="font-size: 11px; color: #777; font-weight: normal;">(Biaya denda/perpanjangan dadakan: ${rupiah(p.extra_day)}/hari)</small>` : "";
+      const extraNote = p.extra_day ? `<br><small style="font-size: 11px; color: #777; font-weight: normal;">(Extra Day: ${rupiah(p.extra_day)}/hari)</small>` : "";
       document.getElementById("pPrice").innerHTML = p.was
         ? `<s>${rupiah(p.was)}</s><span class="now">${rupiah(p.price)}</span> <small>/${MIN_RENTAL_DAYS} hari</small>${extraNote}`
         : `${rupiah(p.price)} <small>/${MIN_RENTAL_DAYS} hari</small>${extraNote}`;
-      document.getElementById("pDesc").textContent = "Gaun elegan siap sewa untuk momen spesialmu — cocok untuk pesta, resepsi, atau acara formal. Dirawat rapi dan siap membuatmu tampil memukau.";
+      document.getElementById("pDesc").textContent = "";
       document.getElementById("mainImg").src = p.img;
       document.getElementById("mainImg").alt = p.name;
 

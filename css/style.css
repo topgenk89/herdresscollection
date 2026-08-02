@@ -1,19 +1,19 @@
 /* ============================================================
-   TERRA — Warm & Natural Fashion Store
+   Herdress Collection — Elegant Rose Dress Rental
    Design tokens + base styles
    ============================================================ */
 
 :root {
-  /* — Warm neutral palette — */
-  --clay:        #B5623C;  /* accent — terracotta */
-  --clay-deep:   #8F4A2C;
-  --sand:        #E7DED2;  /* borders / soft fill */
-  --oat:         #F3EDE3;  /* section tint */
-  --cream:       #FAF6EF;  /* page base */
-  --ink:         #2B2622;  /* near-black warm */
-  --ink-soft:    #6B635A;  /* secondary text */
-  --sage:        #7C8471;  /* secondary accent */
-  --line:        #DAD1C4;
+  /* — Elegant rose / pink palette — */
+  --clay:        #C4708A;  /* accent — rose pink */
+  --clay-deep:   #A24E6C;  /* deep rose */
+  --sand:        #F1DCE3;  /* borders / soft fill */
+  --oat:         #F9EEF1;  /* section tint */
+  --cream:       #FDF8F9;  /* page base */
+  --ink:         #3A2A30;  /* near-black warm plum */
+  --ink-soft:    #7A6068;  /* secondary text */
+  --sage:        #B98A9A;  /* secondary accent (muted rose) */
+  --line:        #EAD5DC;
 
   /* — Type — */
   --serif: "Fraunces", Georgia, "Times New Roman", serif;
@@ -108,7 +108,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  height: 70px;
+  min-height: 80px;
+  padding: 10px 0;
 }
 .nav { display: flex; gap: 28px; }
 .nav a {
@@ -422,7 +423,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border: 1px solid var(--line); display: flex; flex-direction: column;
 }
 .review-card .stars { margin-bottom: 16px; font-size: 14px; letter-spacing: 4px; }
-.review-card p { font-size: 15px; line-height: 1.7; margin-bottom: 32px; font-style: italic; flex: 1; }
+.review-card p { font-size: 15px; line-height: 1.7; margin-bottom: 32px; font-style: normal; flex: 1; color: var(--ink); }
 .review-card .reviewer { display: flex; align-items: center; gap: 12px; }
 .review-card .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--oat); object-fit: cover; }
 .review-card .rev-info { display: flex; flex-direction: column; }
@@ -449,7 +450,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Footer
    ============================================================ */
 .footer { background: var(--cream); border-top: 1px solid var(--line); padding: 72px 0 32px; }
-.footer__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 56px; }
+.footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 56px; }
 .footer__brand .brand { text-align: left; margin-bottom: 14px; }
 .footer__brand p { color: var(--ink-soft); font-size: 14px; max-width: 34ch; }
 .footer h5 { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 18px; }

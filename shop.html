@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Katalog Koleksi Rental — Herdress Collection</title>
   <meta name="description" content="Jelajahi ratusan koleksi rental gaun pesta, kebaya modern, dan dress pengantin dari Herdress Collection. Temukan ukuran dan gaya yang paling pas untukmu." />
-  <meta name="keywords" content="katalog gaun, katalog kebaya, koleksi dress rental, Herdress Collection, sewa baju pesta, sewa gaun katalog" />
+  <meta name="keywords" content="katalog gaun, katalog kebaya, koleksi dress rental, Herdress Collection, rental baju pesta, rental gaun katalog" />
 
-  <meta property="og:title" content="Katalog Koleksi Sewa — Herdress Collection" />
-  <meta property="og:description" content="Jelajahi seluruh koleksi gaun pesta dan kebaya premium siap sewa. Tampil memukau tanpa harus membeli." />
+  <meta property="og:title" content="Katalog Koleksi Rental — Herdress Collection" />
+  <meta property="og:description" content="Jelajahi seluruh koleksi gaun pesta dan kebaya premium siap dirental. Tampil memukau tanpa harus membeli." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://herdresscollection.com/shop.html" />
 
@@ -38,7 +38,7 @@
 
   <div class="wrap page-head">
     <div class="crumbs"><a href="/">Beranda</a> / <span id="crumbShop">Koleksi Rental</span></div>
-    <h1 id="shopTitle">Semua Koleksi</h1>
+    <h1 id="shopTitle">All Collection</h1>
     <p id="shopSubtitle">Pilih dress impianmu, tentukan tanggal & ukuran, lalu pesan langsung lewat WhatsApp.</p>
   </div>
 
@@ -67,9 +67,8 @@
       <div class="footer__grid">
         <div class="footer__brand">
           <div class="brand">HERDRESS</div>
-          <p>Rental dress & gaun untuk setiap momen spesialmu. Dari Bandung, untuk seluruh Indonesia.</p>
+          <p>Rental dress & gaun untuk setiap momen spesialmu. Dari Tangerang, untuk seluruh Indonesia.</p>
         </div>
-        <div><h5>Kategori</h5><ul><li><a href="shop.html">Gaun Pesta</a></li><li><a href="shop.html">Kebaya</a></li><li><a href="shop.html">Bridesmaid</a></li><li><a href="shop.html">Pengantin</a></li></ul></div>
         <div><h5>Bantuan</h5><ul><li><a href="#">Panduan Ukuran</a></li><li><a href="#">Cara Rental</a></li><li><a href="#">Syarat & Deposit</a></li><li><a href="https://wa.me/6281234567890" target="_blank">Kontak WA</a></li></ul></div>
         <div><h5>Perusahaan</h5><ul><li><a href="#">Tentang</a></li><li><a href="#">Testimoni</a></li><li><a href="#">Karier</a></li></ul></div>
       </div>
@@ -142,7 +141,7 @@
         filters.style.display = "none";
       } else {
         // Bangun chip kategori dinamis
-        let chips = `<button class="chip${cat === 'all' ? ' active' : ''}" data-cat="all">Semua</button>`;
+        let chips = `<button class="chip${cat === 'all' ? ' active' : ''}" data-cat="all">All</button>`;
         chips += (CATEGORIES || []).map(c =>
           `<button class="chip${cat === c.slug ? ' active' : ''}" data-cat="${c.slug}">${c.name}</button>`).join("");
         filters.innerHTML = chips;

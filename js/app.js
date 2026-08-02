@@ -513,8 +513,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderNav();
   await loadProducts();
 
-  renderGrid(document.getElementById("featuredGrid"), PRODUCTS.slice(0, 4));
-  renderGrid(document.getElementById("bestGrid"), PRODUCTS.slice(4, 8));
+  // Ambil hanya produk yang tersedia (status === 'tersedia')
+  const availableProducts = PRODUCTS.filter(p => p.status === 'tersedia');
+
+  // Urutkan untuk 'Baru Tersedia' (id terbaru)
+  const newProducts = [...availableProducts].sort((a,b) => b.id - a.id).slice(0, 4);
+  renderGrid(document.getElementById("featuredGrid"), newProducts);
+
+  // Ambil untuk 'Favorit' (4 produk lain yang berbeda)
+  const bestProducts = availableProducts.filter(p => !newProducts.includes(p)).slice(0, 4);
+  // Fallback jika total produk < 8
+  const displayBest = bestProducts.length > 0 ? bestProducts : availableProducts.slice(0, 4);
+  renderGrid(document.getElementById("bestGrid"), displayBest);
 
   // Page-specific hooks
   window.__initIndex?.();

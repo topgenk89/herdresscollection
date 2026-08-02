@@ -199,7 +199,7 @@ function renderAdminList() {
       <img src="${p.img}" alt="${p.name}" />
       <div class="admin-item__info">
         <b>${p.name}</b>
-        <small>${labelCat(p.cat)} · ${rupiah(p.price)}/4 hari ${p.extra_day ? '(denda dadakan: '+rupiah(p.extra_day)+'/hr)' : ''}</small>
+        <small>${labelCat(p.cat)} · ${rupiah(p.price)}/4 hari ${p.extra_day ? '(Extra Day: '+rupiah(p.extra_day)+'/hr)' : ''}</small>
         <div>
           <span class="status-badge st-${p.status || 'tersedia'}">${p.status || 'Tersedia'}</span>
           <span style="font-size:11px; color:#888; margin-left:6px;">Ukuran: ${(p.sizes || []).join(', ')}</span>
@@ -606,7 +606,7 @@ window.completeOrder = async function(id) {
    ============================================================ */
 async function loadSettings() {
   if (!supabaseClient) {
-    document.getElementById("setTopbar").value = localStorage.getItem("terra_setting_topbar") || "Sewa dress mulai Rp175.000/hari · Pesan langsung via WhatsApp";
+    document.getElementById("setTopbar").value = localStorage.getItem("terra_setting_topbar") || "Rental dress mulai Rp175.000/hari · Pesan langsung via WhatsApp";
     document.getElementById("setWa").value = localStorage.getItem("terra_setting_wa") || "6281234567890";
     return;
   }
