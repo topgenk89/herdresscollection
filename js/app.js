@@ -81,12 +81,35 @@ function catName(slug) {
 /* Menu bawaan bila admin belum menyusun menu sendiri.
    Tipe item: 'link' (url langsung), 'cat', 'collection', 'tag', 'price', 'group' */
 function defaultMenu() {
-  return [
+  const menu = [
     { label: "Beranda", type: "link", value: "index.html" },
     { label: "Katalog", type: "link", value: "shop.html" },
-    { label: "By Type", type: "group", children: CATEGORIES.map(c => ({ label: c.name, type: "cat", value: c.slug })) },
-    { label: "Collection", type: "group", children: COLLECTIONS.map(c => ({ label: c.name, type: "collection", value: c.slug })) },
+    { label: "Kategori", type: "group", children: CATEGORIES.map(c => ({ label: c.name, type: "cat", value: c.slug })) },
   ];
+  // Tampilkan dropdown Koleksi hanya jika ada koleksi
+  if (COLLECTIONS && COLLECTIONS.length) {
+    menu.push({ label: "Collection", type: "group", children: COLLECTIONS.map(c => ({ label: c.name, type: "collection", value: c.slug })) });
+  }
+  return menu;
+}
+
+/* Pastikan menu selalu punya dropdown Kategori yang sinkron dengan database.
+   Meski admin sudah menyimpan menu kustom, grup kategori tetap diperbarui
+   agar kategori baru otomatis muncul di navigasi. */
+function ensureCategoryMenu(menu) {
+  if (!CATEGORIES || !CATEGORIES.length) return menu;
+  const liveChildren = CATEGORIES.map(c => ({ label: c.name, type: "cat", value: c.slug }));
+  // Cari grup yang isinya kategori (punya minimal 1 child bertipe 'cat')
+  const catGroup = menu.find(m => m.type === "group" && (m.children || []).some(ch => ch.type === "cat"));
+  if (catGroup) {
+    catGroup.children = liveChildren; // segarkan isinya
+  } else {
+    // Sisipkan grup Kategori setelah item Katalog (atau di awal)
+    const idx = menu.findIndex(m => m.type === "link" && (m.value || "").includes("shop"));
+    const group = { label: "Kategori", type: "group", children: liveChildren };
+    menu.splice(idx >= 0 ? idx + 1 : menu.length, 0, group);
+  }
+  return menu;
 }
 
 /* Ubah 1 item menu jadi URL tujuan */
@@ -112,6 +135,7 @@ async function loadMenu() {
     if (local) { try { MENU = JSON.parse(local); } catch { MENU = []; } }
   }
   if (!MENU || !MENU.length) MENU = defaultMenu();
+  MENU = ensureCategoryMenu(MENU);
   return MENU;
 }
 
