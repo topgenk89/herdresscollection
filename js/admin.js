@@ -697,7 +697,12 @@ document.getElementById("catForm")?.addEventListener("submit", async (e) => {
   if (!name) { btn.disabled = false; btn.textContent = "+ Tambah"; return; }
 
   const slug = toSlug(name);
-  if (CATEGORIES.some(c => c.slug === slug)) { showBanner("Kategori sudah ada.", "error"); btn.disabled = false; btn.textContent = "+ Tambah"; return; }
+  const existing = CATEGORIES.find(c => c.slug === slug);
+  // Kalau kategori sudah ada TAPI tanpa foto baru, tolak. Kalau ada foto baru, lanjut (update foto).
+  if (existing && !(file && file.size > 0)) {
+    showBanner("Kategori sudah ada. Pilih foto untuk memperbarui gambarnya.", "error");
+    btn.disabled = false; btn.textContent = "+ Tambah"; return;
+  }
 
   try {
     let imgUrl = null;
@@ -710,21 +715,30 @@ document.getElementById("catForm")?.addEventListener("submit", async (e) => {
         imgUrl = supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path).data.publicUrl;
       }
 
-      const ord = CATEGORIES.length + 1;
-      const payload = { slug, name, ord };
-      if (imgUrl) payload.img = imgUrl;
-
-      const { error } = await supabaseClient.from("categories").insert([payload]);
-      if (error) throw error;
+      if (existing) {
+        // UPDATE foto kategori yang sudah ada
+        const payload = {};
+        if (imgUrl) payload.img = imgUrl;
+        const { error } = await supabaseClient.from("categories").update(payload).eq("slug", slug);
+        if (error) throw error;
+      } else {
+        // INSERT kategori baru
+        const ord = CATEGORIES.length + 1;
+        const payload = { slug, name, ord };
+        if (imgUrl) payload.img = imgUrl;
+        const { error } = await supabaseClient.from("categories").insert([payload]);
+        if (error) throw error;
+      }
     } else {
-      CATEGORIES.push({ slug, name, ord: CATEGORIES.length + 1, img: null });
+      if (existing) { existing.img = imgUrl; }
+      else { CATEGORIES.push({ slug, name, ord: CATEGORIES.length + 1, img: null }); }
       saveDemoTaxo();
     }
     await loadTaxonomy();
     populateTaxonomyControls();
     renderTaxoLists();
     e.target.reset();
-    showBanner("✓ Kategori ditambahkan.", "success");
+    showBanner(existing ? "✓ Foto kategori diperbarui." : "✓ Kategori ditambahkan.", "success");
   } catch (err) {
     showBanner("Gagal: " + err.message, "error");
   } finally {
