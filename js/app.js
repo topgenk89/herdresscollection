@@ -177,7 +177,6 @@ function renderNav() {
       }
       return `<a href="${menuHref(item)}">${item.label}</a>`;
     }).join("");
-    html += `<a href="admin.html">Kelola Produk</a>`;
     html += `</div>`;
     mnav.innerHTML = html;
     mnav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mnav.classList.remove("open")));
