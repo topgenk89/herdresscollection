@@ -281,7 +281,17 @@
       const catsGrid = document.getElementById("catsGrid");
       if (catsGrid && typeof CATEGORIES !== "undefined") {
         catsGrid.innerHTML = CATEGORIES.map(c => {
-          const imgSrc = c.img || `https://placehold.co/800x1200?text=${encodeURIComponent(c.name)}`;
+          // Prioritas foto kategori:
+          // 1) Foto yang di-upload manual di admin (kolom img)
+          // 2) Otomatis: foto produk pertama yang ada di kategori ini
+          // 3) Placeholder abu-abu jika belum ada produk sama sekali
+          let imgSrc = c.img;
+          if (!imgSrc && typeof PRODUCTS !== "undefined") {
+            const firstProduct = PRODUCTS.find(p => p.cat === c.slug && p.img);
+            if (firstProduct) imgSrc = firstProduct.img;
+          }
+          if (!imgSrc) imgSrc = `https://placehold.co/800x1200?text=${encodeURIComponent(c.name)}`;
+
           return `
             <a href="shop.html?cat=${c.slug}" class="cat">
               <img src="${imgSrc}" alt="${c.name}" />
