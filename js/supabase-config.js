@@ -1,5 +1,5 @@
 /* ============================================================
-   TERRA Rental — Konfigurasi Supabase
+   Herdress Collection — Konfigurasi Supabase
    ------------------------------------------------------------
    ISI 2 nilai di bawah ini dengan milik project Supabase Anda.
    Ambil di: Supabase Dashboard → Project Settings → API

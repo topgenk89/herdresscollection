@@ -1,5 +1,5 @@
 /* ============================================================
-   TERRA Rental — shared data + interactions
+   Herdress Collection — shared data + interactions
    Sewa dress · checkout ke WhatsApp · produk dari Supabase
    ============================================================ */
 

@@ -1,5 +1,5 @@
 /* ============================================================
-   TERRA Rental — Admin JS (Tab, Produk, Order, Setting)
+   Herdress Collection — Admin JS (Tab, Produk, Order, Setting)
    ============================================================ */
 
 /* --- AUTHENTICATION (Supabase Auth) --- */
@@ -44,12 +44,12 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   btn.textContent = "Loading...";
 
   if (!supabaseClient) {
-    if (email === "admin@terra.com" && pass === "admin") {
+    if (email === "admin@herdress.com" && pass === "admin") {
       sessionStorage.setItem("terra_admin_auth", "true");
       errDiv.hidden = true;
       checkAuth();
     } else {
-      errDiv.textContent = "Email atau password salah (Coba: admin@terra.com / admin)";
+      errDiv.textContent = "Email atau password salah (Coba: admin@herdress.com / admin)";
       errDiv.hidden = false;
     }
     btn.disabled = false;
@@ -374,7 +374,7 @@ form.addEventListener("submit", async (e) => {
       showBanner("✓ Perubahan berhasil disimpan.", "success");
     } else {
       // INSERT
-      payload.brand = "TERRA Rental";
+      payload.brand = "Herdress Collection";
       const { error } = await supabaseClient.from("products").insert([payload]);
       if (error) throw error;
       showBanner("✓ Dress baru berhasil ditambahkan.", "success");
