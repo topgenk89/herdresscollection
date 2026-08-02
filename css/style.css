@@ -39,6 +39,7 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 img { display: block; max-width: 100%; height: auto; }
@@ -209,10 +210,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .hero h1 {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(44px, 8vw, 92px);
+  font-size: clamp(38px, 8vw, 92px);
   line-height: .98;
   letter-spacing: -.02em;
   margin: 18px 0 26px;
+  word-wrap: break-word;
 }
 .hero h1 em { font-style: italic; color: var(--sand); }
 
@@ -795,6 +797,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .grid { grid-template-columns: repeat(3, 1fr); }
   .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   .cats { grid-template-columns: repeat(4, 1fr); }
+  .pdp { grid-template-columns: 1fr; gap: 40px; }
+  .gallery__main { aspect-ratio: 4/5; }
+  .pdp__info { position: static; }
 }
 @media (max-width: 760px) {
   .nav, .header__actions .search-desktop { display: none; }
@@ -812,17 +817,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   }
   .cats::-webkit-scrollbar { display: none; } /* Chrome/Safari */
   .cat {
-    flex: 0 0 65%; /* Lebar tiap kotak kategori di HP */
-    scroll-snap-align: start;
+    flex: 0 0 75%; /* Lebar tiap kotak kategori di HP disesuaikan */
+    scroll-snap-align: center;
   }
 
   .grid { grid-template-columns: repeat(2, 1fr); gap: 20px 12px; }
   .split { grid-template-columns: 1fr; }
-  .split__img { min-height: 340px; }
+  .split__img { min-height: 300px; }
+  .split__body h2 { font-size: 32px; }
+  .split__body { padding: 40px var(--gut); }
+
   .values { grid-template-columns: 1fr; gap: 28px; }
-  .steps-grid { grid-template-columns: 1fr 1fr; gap: 40px 24px; }
+  .steps-grid { grid-template-columns: 1fr; gap: 32px; }
   .review-grid { grid-template-columns: 1fr; }
+
+  .footer__grid { grid-template-columns: 1fr; gap: 32px; }
   .footer__bottom { flex-direction: column; gap: 10px; text-align: center; }
   .quick { display: none; }
+
   .admin-layout { grid-template-columns: 1fr; gap: 24px; }
+  .admin-form__row { grid-template-columns: 1fr !important; gap: 16px; }
+
+  .checkout-form__row { grid-template-columns: 1fr; gap: 12px; }
+  .drawer { width: 100%; }
 }
