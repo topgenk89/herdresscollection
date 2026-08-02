@@ -164,8 +164,16 @@ function renderNav() {
       <div class="mobile-nav__links">`;
     html += MENU.map(item => {
       if (item.type === "group" && item.children && item.children.length) {
-        return `<span class="mobile-nav__label">${item.label}</span>` +
-          item.children.map(ch => `<a href="${menuHref(ch)}">${ch.label}</a>`).join("");
+        // Grup jadi accordion yang bisa dibuka-tutup
+        const subLinks = item.children.map(ch => `<a href="${menuHref(ch)}">${ch.label}</a>`).join("");
+        return `
+          <div class="mobile-dd">
+            <button class="mobile-dd__trigger" type="button">
+              <span>${item.label}</span>
+              <svg class="mobile-dd__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="mobile-dd__panel">${subLinks}</div>
+          </div>`;
       }
       return `<a href="${menuHref(item)}">${item.label}</a>`;
     }).join("");
@@ -174,6 +182,10 @@ function renderNav() {
     mnav.innerHTML = html;
     mnav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mnav.classList.remove("open")));
     mnav.querySelector(".mobile-nav__close")?.addEventListener("click", () => mnav.classList.remove("open"));
+    // Toggle accordion dropdown
+    mnav.querySelectorAll(".mobile-dd__trigger").forEach(btn => {
+      btn.addEventListener("click", () => btn.closest(".mobile-dd").classList.toggle("open"));
+    });
   });
 }
 

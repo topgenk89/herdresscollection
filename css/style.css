@@ -623,6 +623,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .mobile-nav a { font-family: var(--serif); font-size: 22px; font-weight: 300; padding: 12px 0; border-bottom: 1px solid var(--line); }
 
+/* Accordion dropdown di mobile nav */
+.mobile-dd { border-bottom: 1px solid var(--line); }
+.mobile-dd__trigger {
+  width: 100%; background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--ink);
+  padding: 12px 0; text-align: left;
+}
+.mobile-dd__arrow { transition: transform .3s var(--ease); color: var(--ink-soft); flex: 0 0 auto; }
+.mobile-dd.open .mobile-dd__arrow { transform: rotate(180deg); }
+.mobile-dd__panel {
+  max-height: 0; overflow: hidden;
+  transition: max-height .35s var(--ease);
+}
+.mobile-dd.open .mobile-dd__panel { max-height: 60vh; overflow-y: auto; }
+.mobile-dd__panel a {
+  font-size: 16px; padding: 10px 0 10px 16px; color: var(--ink-soft);
+  border-bottom: 1px solid var(--line);
+}
+.mobile-dd__panel a:last-child { border-bottom: none; }
+
 /* ============================================================
    Harga /hari kecil
    ============================================================ */
