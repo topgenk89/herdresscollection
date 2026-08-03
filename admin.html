@@ -112,7 +112,10 @@
                 <label>Harga coret (opsional)
                   <input type="text" inputmode="numeric" name="was" id="pWas" placeholder="kosongkan bila tidak" />
                 </label>
-                <label>&nbsp;</label>
+                <label>Deposit / Jaminan (Rp)
+                  <input type="text" inputmode="numeric" name="deposit" id="pDeposit" placeholder="mis. 100.000" />
+                  <span style="font-size: 10px; color: #888;">Uang jaminan yang dikembalikan setelah dress dikembalikan</span>
+                </label>
               </div>
               <div class="admin-form__row">
                 <label>Label Promo
@@ -331,6 +334,15 @@
 
     </div>
   </div> <!-- End adminContent -->
+
+  <!-- Modal Detail Order -->
+  <div id="orderModal" class="overlay">
+    <div class="admin-login-card" style="margin:auto; margin-top:10vh; max-width:500px; position:relative;">
+      <button class="mobile-nav__close" style="position:absolute; top:10px; right:10px;" id="closeOrderModal">&times;</button>
+      <h3 style="font-size:18px; margin-bottom:10px;">Detail Catatan Rental</h3>
+      <div id="orderModalContent" style="font-size:13px; line-height:1.6; color:var(--ink-soft); display:flex; flex-direction:column; gap:8px;"></div>
+    </div>
+  </div>
 
   <footer class="footer">
     <div class="wrap">

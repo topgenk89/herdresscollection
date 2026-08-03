@@ -45,6 +45,19 @@
         <div class="stars">★★★★★ <span id="pReviews">128 penyewa puas</span></div>
         <p class="pdp__desc" id="pDesc"></p>
 
+        <div class="pdp__terms" id="pTerms">
+          <div class="pdp__term" id="pDepositBox" hidden>
+            <span class="pdp__term-label">Deposit / Jaminan</span>
+            <span class="pdp__term-val" id="pDepositVal"></span>
+            <small>Dikembalikan penuh setelah dress kembali dalam kondisi baik.</small>
+          </div>
+          <div class="pdp__term" id="pExtraBox" hidden>
+            <span class="pdp__term-label">Extra Day</span>
+            <span class="pdp__term-val" id="pExtraVal"></span>
+            <small>Biaya tambahan per hari bila masa rental diperpanjang.</small>
+          </div>
+        </div>
+
         <div class="opt-label">Ukuran <a href="#">Panduan ukuran</a></div>
         <div class="sizes" id="sizes"></div>
 
@@ -133,11 +146,20 @@
       document.getElementById("pBrand").textContent = p.brand;
       document.getElementById("pName").textContent = p.name;
       document.title = p.name + " — Herdress Collection";
-      const extraNote = p.extra_day ? `<br><small style="font-size: 11px; color: #777; font-weight: normal;">(Extra Day: ${rupiah(p.extra_day)}/hari)</small>` : "";
       document.getElementById("pPrice").innerHTML = p.was
-        ? `<s>${rupiah(p.was)}</s><span class="now">${rupiah(p.price)}</span> <small>/${MIN_RENTAL_DAYS} hari</small>${extraNote}`
-        : `${rupiah(p.price)} <small>/${MIN_RENTAL_DAYS} hari</small>${extraNote}`;
+        ? `<s>${rupiah(p.was)}</s><span class="now">${rupiah(p.price)}</span> <small>/${MIN_RENTAL_DAYS} hari</small>`
+        : `${rupiah(p.price)} <small>/${MIN_RENTAL_DAYS} hari</small>`;
       document.getElementById("pDesc").textContent = "";
+
+      // Deposit & Extra Day
+      if (p.deposit && p.deposit > 0) {
+        document.getElementById("pDepositBox").hidden = false;
+        document.getElementById("pDepositVal").textContent = rupiah(p.deposit);
+      }
+      if (p.extra_day && p.extra_day > 0) {
+        document.getElementById("pExtraBox").hidden = false;
+        document.getElementById("pExtraVal").textContent = rupiah(p.extra_day) + " /hari";
+      }
       document.getElementById("mainImg").src = p.img;
       document.getElementById("mainImg").alt = p.name;
 

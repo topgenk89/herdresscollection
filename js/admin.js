@@ -199,7 +199,7 @@ function renderAdminList() {
       <img src="${p.img}" alt="${p.name}" />
       <div class="admin-item__info">
         <b>${p.name}</b>
-        <small>${labelCat(p.cat)} · ${rupiah(p.price)}/4 hari ${p.extra_day ? '(Extra Day: '+rupiah(p.extra_day)+'/hr)' : ''}</small>
+        <small>${labelCat(p.cat)} · ${rupiah(p.price)}/4 hari ${p.extra_day ? '(Extra Day: '+rupiah(p.extra_day)+'/hr)' : ''} ${p.deposit ? '· Deposit: '+rupiah(p.deposit) : ''}</small>
         <div>
           <span class="status-badge st-${p.status || 'tersedia'}">${p.status || 'Tersedia'}</span>
           <span style="font-size:11px; color:#888; margin-left:6px;">Ukuran: ${(p.sizes || []).join(', ')}</span>
@@ -235,6 +235,7 @@ document.getElementById("adminList").addEventListener("click", async (e) => {
     document.getElementById("pStatus").value = p.status || "tersedia";
     document.getElementById("pPrice").value = p.price ? new Intl.NumberFormat("id-ID").format(p.price) : "";
     document.getElementById("pExtraDay").value = p.extra_day ? new Intl.NumberFormat("id-ID").format(p.extra_day) : "";
+    if (document.getElementById("pDeposit")) document.getElementById("pDeposit").value = p.deposit ? new Intl.NumberFormat("id-ID").format(p.deposit) : "";
     document.getElementById("pWas").value = p.was ? new Intl.NumberFormat("id-ID").format(p.was) : "";
     document.getElementById("pBadge").value = p.badge || "";
     document.getElementById("pSizes").value = (p.sizes || ["S","M","L"]).join(", ");
@@ -314,6 +315,7 @@ form.addEventListener("submit", async (e) => {
   const name = (fd.get("name") || "").trim();
   const price = parseInputNumber(fd.get("price"));
   const extra_day = parseInputNumber(fd.get("extra_day"));
+  const deposit = parseInputNumber(fd.get("deposit"));
   const was = fd.get("was") ? parseInputNumber(fd.get("was")) : null;
   const cat = fd.get("cat");
   const collection = fd.get("collection") || null;
@@ -356,7 +358,7 @@ form.addEventListener("submit", async (e) => {
     if (g2 && g2.size > 0) newGallery.push(await uploadToSupabase(g2, 'gal2'));
     if (g3 && g3.size > 0) newGallery.push(await uploadToSupabase(g3, 'gal3'));
 
-    const payload = { name, price, extra_day, was, cat, collection, status, badge, sizes, tags };
+    const payload = { name, price, extra_day, deposit, was, cat, collection, status, badge, sizes, tags };
     if (imgUrl) { payload.img = imgUrl; payload.alt = imgUrl; }
 
     // Gabungkan array galeri lama dengan yang baru (khusus saat edit, jika ada tambahan)
@@ -551,20 +553,64 @@ function renderOrders() {
     tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#888;">Belum ada catatan sewa.</td></tr>`;
     return;
   }
-  tbody.innerHTML = ORDERS.map(o => `
-    <tr>
-      <td><b>${o.customer}</b></td>
-      <td>${o.customer_phone ? `<a href="https://wa.me/${o.customer_phone}" target="_blank" style="color:var(--clay); text-decoration:underline;">${o.customer_phone}</a>` : '-'}</td>
-      <td>${o.dress_name}</td>
-      <td>${o.rent_start}</td>
-      <td>${o.rent_end}</td>
-      <td><span class="status-badge st-${o.status}">${o.status}</span></td>
-      <td>
-        ${o.status === 'berjalan' ? `<button onclick="completeOrder(${o.id})" class="btn btn--line" style="padding:4px 8px; font-size:10px;">Selesaikan</button>` : '-'}
-      </td>
-    </tr>
-  `).join("");
+  tbody.innerHTML = ORDERS.map(o => {
+    // Ambil nama dress saja untuk di tabel (pisahkan dari rincian harga jika formatnya panjang)
+    const shortName = o.dress_name.split(" — ")[0];
+    return `
+      <tr>
+        <td><b>${o.customer}</b></td>
+        <td>${o.customer_phone ? `<a href="https://wa.me/${o.customer_phone}" target="_blank" style="color:var(--clay); text-decoration:underline;">${o.customer_phone}</a>` : '-'}</td>
+        <td>
+          ${shortName}<br/>
+          <button type="button" onclick="showOrderDetail(${o.id})" style="color:var(--clay); text-decoration:underline; font-size:11px; margin-top:4px;">Lihat Rincian Harga</button>
+        </td>
+        <td>${o.rent_start}</td>
+        <td>${o.rent_end}</td>
+        <td>
+          <select onchange="updateOrderStatus(${o.id}, this.value)" style="font-size: 11px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--line); font-weight: 500; cursor: pointer; color: ${o.status === 'pending' ? '#b7791f' : (o.status === 'berjalan' ? 'var(--clay-deep)' : '#4a5568')}; background: ${o.status === 'pending' ? '#fbeecd' : (o.status === 'berjalan' ? 'var(--sand)' : '#e3e6ea')};">
+            <option value="pending" ${o.status === 'pending' ? 'selected' : ''}>⏳ Menunggu</option>
+            <option value="berjalan" ${o.status === 'berjalan' ? 'selected' : ''}>👗 Sedang Disewa</option>
+            <option value="selesai" ${o.status === 'selesai' ? 'selected' : ''}>✅ Selesai (Tuntas)</option>
+          </select>
+        </td>
+        <td style="text-align:center;">
+          <button onclick="deleteOrder(${o.id})" title="Hapus Catatan" style="color:#a12b2b; font-size:12px; font-weight:bold; cursor:pointer;">X</button>
+        </td>
+      </tr>
+    `;
+  }).join("");
 }
+
+/* Modal Detail Order */
+window.showOrderDetail = function(id) {
+  const o = ORDERS.find(x => x.id === id);
+  if (!o) return;
+  const content = document.getElementById("orderModalContent");
+
+  // Jika format lamanya tidak dipisah " — ", tampilkan apa adanya. Jika dipisah, buat baris baru agar rapi.
+  const parts = o.dress_name.split(" — ");
+  let rincianHTML = `<strong>${parts[0]}</strong>`;
+  if (parts[1]) {
+    const hargaParts = parts[1].split(" | ");
+    hargaParts.forEach(h => { rincianHTML += `<br/>• ${h}`; });
+  }
+
+  content.innerHTML = `
+    <div style="background:var(--oat); padding:12px; border-radius:4px; margin-bottom:8px;">
+      <div style="margin-bottom:4px;"><b>Pelanggan:</b> ${o.customer}</div>
+      <div style="margin-bottom:4px;"><b>WhatsApp:</b> <a href="https://wa.me/${o.customer_phone}" target="_blank" style="color:var(--clay);">${o.customer_phone || '-'}</a></div>
+      <div><b>Tanggal:</b> ${o.rent_start} s/d ${o.rent_end}</div>
+    </div>
+    <div style="border:1px solid var(--line); padding:12px; border-radius:4px;">
+      ${rincianHTML}
+    </div>
+  `;
+  document.getElementById("orderModal").classList.add("open");
+}
+
+document.getElementById("closeOrderModal")?.addEventListener("click", () => {
+  document.getElementById("orderModal").classList.remove("open");
+});
 
 document.getElementById("orderForm").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -573,10 +619,11 @@ document.getElementById("orderForm").addEventListener("submit", async (e) => {
   const fd = new FormData(e.target);
   const payload = {
     customer: fd.get("customer"),
+    customer_phone: fd.get("customer_phone"),
     dress_name: fd.get("dress_name"),
     rent_start: fd.get("rent_start"),
     rent_end: fd.get("rent_end"),
-    status: 'berjalan'
+    status: 'berjalan' // Kalau admin yang bikin manual, anggap langsung berjalan
   };
 
   const btn = document.getElementById("saveOrderBtn");
@@ -591,13 +638,26 @@ document.getElementById("orderForm").addEventListener("submit", async (e) => {
   btn.disabled = false;
 });
 
-window.completeOrder = async function(id) {
-  if (!confirm("Tandai pesanan ini selesai (dress sudah dikembalikan)?")) return;
+window.updateOrderStatus = async function(id, newStatus) {
   try {
-    const { error } = await supabaseClient.from("orders").update({status: 'selesai'}).eq("id", id);
+    const { error } = await supabaseClient.from("orders").update({status: newStatus}).eq("id", id);
     if (error) throw error;
     await loadOrders();
-  } catch (err) { showBanner("Gagal update status", "error"); }
+    showBanner(`Status pesanan berhasil diubah.`, "success");
+  } catch (err) {
+    showBanner("Gagal update status", "error");
+    await loadOrders(); // kembalikan dropdown ke posisi semula jika gagal
+  }
+}
+
+window.deleteOrder = async function(id) {
+  if (!confirm("Yakin ingin menghapus catatan pesanan ini selamanya?")) return;
+  try {
+    const { error } = await supabaseClient.from("orders").delete().eq("id", id);
+    if (error) throw error;
+    await loadOrders();
+    showBanner("Catatan pesanan berhasil dihapus.", "success");
+  } catch (err) { showBanner("Gagal menghapus pesanan", "error"); }
 }
 
 

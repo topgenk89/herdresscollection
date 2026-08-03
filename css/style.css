@@ -561,6 +561,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .stars span { color: var(--ink-soft); letter-spacing: 0; margin-left: 8px; }
 .pdp__desc { color: var(--ink-soft); line-height: 1.7; margin-bottom: 28px; }
 
+/* Deposit & Extra Day box */
+.pdp__terms { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+.pdp__term {
+  flex: 1; min-width: 160px;
+  background: var(--oat); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 14px 16px; display: flex; flex-direction: column; gap: 3px;
+}
+.pdp__term-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.pdp__term-val { font-family: var(--serif); font-size: 22px; font-weight: 500; color: var(--clay-deep); }
+.pdp__term small { font-size: 11px; color: var(--ink-soft); line-height: 1.4; margin-top: 2px; }
+
 .opt-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px; display: flex; justify-content: space-between; }
 .opt-label a { text-decoration: underline; }
 .colors { display: flex; gap: 10px; margin-bottom: 28px; }
@@ -787,7 +798,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* --- Status Badges --- */
 .status-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
 .st-tersedia { background: #dff0e5; color: #1a6b45; }
-.st-disewa, .st-berjalan { background: #fbeecd; color: #8a5a12; }
+.st-pending { background: #fbeecd; color: #b7791f; border: 1px solid #f6e05e; }
+.st-disewa, .st-berjalan { background: var(--sand); color: var(--clay-deep); border: 1px solid var(--clay); }
 .st-laundry, .st-selesai { background: #e3e6ea; color: #4a5568; }
 
 /* ============================================================

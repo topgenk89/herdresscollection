@@ -225,6 +225,7 @@ function normalizeProduct(p) {
     brand: p.brand || "Herdress Collection",
     price: Number(p.price) || 0,
     extra_day: p.extra_day ? Number(p.extra_day) : 0,
+    deposit: p.deposit ? Number(p.deposit) : 0,
     was: p.was ? Number(p.was) : null,
     cat: p.cat || "pesta",
     collection: p.collection || null,
@@ -293,7 +294,7 @@ const Cart = {
     const cart = this.get();
     const found = cart.find(i => i.id === p.id && i.size === size);
     if (found) found.qty += qty;
-    else cart.push({ id: p.id, name: p.name, price: p.price, extra_day: p.extra_day || 0, img: p.img, size, qty });
+    else cart.push({ id: p.id, name: p.name, price: p.price, extra_day: p.extra_day || 0, deposit: p.deposit || 0, img: p.img, size, qty });
     this.save(cart);
     openCart();
   },
@@ -358,7 +359,15 @@ async function checkoutWhatsApp() {
   const durasi = document.getElementById("coDays")?.value || "1";
 
   if (!nama) { alert("Mohon isi nama pemesan."); document.getElementById("coName")?.focus(); return; }
-  if (!phone) { alert("Mohon isi No. WhatsApp Anda."); document.getElementById("coPhone")?.focus(); return; }
+
+  // Validasi Nomor WA (harus angka & min 9 digit)
+  const phoneClean = phone.replace(/\D/g, "");
+  if (!phoneClean || phoneClean.length < 9) {
+    alert("Mohon masukkan nomor WhatsApp yang valid (minimal 9 angka).");
+    document.getElementById("coPhone")?.focus();
+    return;
+  }
+
   if (!tglMulai) { alert("Mohon pilih tanggal mulai rental."); document.getElementById("coStart")?.focus(); return; }
 
   const checkoutBtn = document.getElementById("checkoutBtn");
@@ -380,14 +389,19 @@ async function checkoutWhatsApp() {
   if (supabaseClient) {
     try {
       // Bikin satu entri order per item di keranjang
-      const orderPayloads = items.map(i => ({
-        customer: nama,
-        customer_phone: phone,
-        dress_name: `${i.name} (Size: ${i.size}) x${i.qty}`,
-        rent_start: tglMulai,
-        rent_end: tglKembaliIso,
-        status: 'berjalan'
-      }));
+      const orderPayloads = items.map(i => {
+        const subtotal = rentalTotal(i.price, hari) * i.qty;
+        const totalDep = (i.deposit || 0) * i.qty;
+        const detailStr = `${i.name} (Ukuran: ${i.size}) x${i.qty} — Sewa: ${rupiah(subtotal)} | Deposit: ${rupiah(totalDep)} | Tagihan: ${rupiah(subtotal + totalDep)}`;
+        return {
+          customer: nama,
+          customer_phone: phoneClean, // Simpan versi bersih (hanya angka)
+          dress_name: detailStr,
+          rent_start: tglMulai,
+          rent_end: tglKembaliIso,
+          status: 'pending' // Status awal saat baru masuk WA
+        };
+      });
       await supabaseClient.from("orders").insert(orderPayloads);
     } catch (err) {
       console.warn("Gagal auto-insert pesanan ke DB:", err);
@@ -397,10 +411,14 @@ async function checkoutWhatsApp() {
 
   // 2. Susun Pesan WhatsApp
   let msg = `Halo Herdress Collection! 👗\n\nSaya ingin merental dress berikut:\n\n`;
+  let totalDeposit = 0;
+
   items.forEach((i, n) => {
     const subtotal = rentalTotal(i.price, hari) * i.qty;
+    totalDeposit += (i.deposit || 0) * i.qty;
     const extraInfo = i.extra_day ? `\n   • Info Perpanjangan/Extra: ${rupiah(i.extra_day)}/hari` : "";
-    msg += `${n + 1}. ${i.name}\n   • Ukuran: ${i.size}\n   • Jumlah: ${i.qty}\n   • Harga: ${rupiah(i.price)} / ${MIN_RENTAL_DAYS} hari${extraInfo}\n   • Subtotal (${hari} hari): ${rupiah(subtotal)}\n\n`;
+    const depositInfo = i.deposit ? `\n   • Deposit/Jaminan: ${rupiah(i.deposit)} (Dikembalikan nanti)` : "";
+    msg += `${n + 1}. ${i.name}\n   • Ukuran: ${i.size}\n   • Jumlah: ${i.qty}\n   • Harga: ${rupiah(i.price)} / ${MIN_RENTAL_DAYS} hari${extraInfo}${depositInfo}\n   • Subtotal (${hari} hari): ${rupiah(subtotal)}\n\n`;
   });
   const estimasiTotal = Cart.totalForDays(hari);
   msg += `----------------------------------\n`;
@@ -408,7 +426,10 @@ async function checkoutWhatsApp() {
   msg += `No. WhatsApp : ${phone}\n`;
   msg += `Tanggal rental : ${tanggalFmt}\n`;
   msg += `Durasi rental  : ${hari} hari (min. ${MIN_RENTAL_DAYS} hari)\n`;
-  msg += `Estimasi total : ${rupiah(estimasiTotal)}\n`;
+  msg += `Total Harga Rental : ${rupiah(estimasiTotal)}\n`;
+  msg += `Total Uang Deposit : ${rupiah(totalDeposit)}\n`;
+  msg += `----------------------------------\n`;
+  msg += `Total Tagihan (Estimasi) : ${rupiah(estimasiTotal + totalDeposit)}\n`;
   msg += `----------------------------------\n\n`;
   msg += `Mohon info ketersediaan & langkah selanjutnya. Terima kasih! 🙏`;
 
