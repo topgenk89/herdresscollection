@@ -71,7 +71,7 @@
         <div class="accordion">
           <details open><summary>Detail &amp; bahan</summary><p>Dress dirawat & dicuci profesional sebelum direntalkan. Bahan nyaman, jahitan rapi, dan potongan yang membentuk siluet indah untuk berbagai acara.</p></details>
           <details><summary>Ketentuan rental</summary><p>Harga adalah untuk paket rental 4 hari (kelipatan). Jika memperpanjang masa rental, akan dikenakan biaya Extra Day per hari sesuai yang tertera. Wajib deposit yang dikembalikan setelah dress dikembalikan dalam kondisi baik.</p></details>
-          <details><summary>Pengambilan &amp; pengembalian</summary><p>Ambil di butik kami atau kirim via kurir (ongkir ditanggung penyewa). Dress dikembalikan maksimal H+1 setelah masa rental berakhir.</p></details>
+          <details><summary>Pengambilan &amp; pengembalian</summary><p>Ambil di butik kami atau kirim via kurir (ongkir ditanggung penyewa). Dress dikembalikansaatmasa rental berakhir.</p></details>
           <details><summary>Perawatan selama rental</summary><p>Jangan mencuci sendiri. Hindari noda berat & sobek. Kerusakan di luar wajar dikenakan biaya perbaikan sesuai kesepakatan.</p></details>
         </div>
       </div>
@@ -151,13 +151,18 @@
         : `${rupiah(p.price)} <small>/${MIN_RENTAL_DAYS} hari</small>`;
       document.getElementById("pDesc").textContent = "";
 
-      // Deposit & Extra Day
-      if (p.deposit && p.deposit > 0) {
-        document.getElementById("pDepositBox").hidden = false;
+      // Deposit & Extra Day (pakai style.display agar tidak kalah oleh CSS flex)
+      const depositBox = document.getElementById("pDepositBox");
+      const extraBox = document.getElementById("pExtraBox");
+      depositBox.style.display = "none";
+      extraBox.style.display = "none";
+
+      if (p.deposit && Number(p.deposit) > 0) {
+        depositBox.style.display = "flex";
         document.getElementById("pDepositVal").textContent = rupiah(p.deposit);
       }
-      if (p.extra_day && p.extra_day > 0) {
-        document.getElementById("pExtraBox").hidden = false;
+      if (p.extra_day && Number(p.extra_day) > 0) {
+        extraBox.style.display = "flex";
         document.getElementById("pExtraVal").textContent = rupiah(p.extra_day) + " /hari";
       }
       document.getElementById("mainImg").src = p.img;
